@@ -9,11 +9,16 @@ GEM
       archive-zip (~> 0.7.0)
       nokogiri (~> 1.6)
     ffi (1.9.18)
+    highline (1.7.8)
     io-like (0.3.0)
     mini_portile2 (2.2.0)
     nokogiri (1.8.0)
       mini_portile2 (~> 2.2.0)
+    options (2.3.2)
     phashion (1.2.0)
+    progress_bar (1.1.0)
+      highline (~> 1.6)
+      options (~> 2.3.0)
     rubyzip (1.2.1)
     selenium-webdriver (3.6.0)
       childprocess (~> 0.5)
@@ -29,6 +34,7 @@ PLATFORMS
 DEPENDENCIES
   chromedriver-helper
   phashion
+  progress_bar
   selenium-webdriver
   watir (>= 6.2.0)
   watir-webdriver (>= 0.9.9)
