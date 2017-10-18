@@ -1,4 +1,4 @@
-CONFIG = JSON.load(File.read(File.join(File.dirname(__FILE__), '/config/config.json')))
+CONFIG = JSON.load(File.read(File.join(File.dirname(__FILE__), '../config/config.json')))
 
 class Screenshooter
   def initialize(browser_name)
