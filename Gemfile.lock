@@ -1,0 +1,37 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    archive-zip (0.7.0)
+      io-like (~> 0.3.0)
+    childprocess (0.7.0)
+      ffi (~> 1.0, >= 1.0.11)
+    chromedriver-helper (1.1.0)
+      archive-zip (~> 0.7.0)
+      nokogiri (~> 1.6)
+    ffi (1.9.18)
+    io-like (0.3.0)
+    mini_portile2 (2.2.0)
+    nokogiri (1.8.0)
+      mini_portile2 (~> 2.2.0)
+    phashion (1.2.0)
+    rubyzip (1.2.1)
+    selenium-webdriver (3.6.0)
+      childprocess (~> 0.5)
+      rubyzip (~> 1.0)
+    watir (6.8.1)
+      selenium-webdriver (~> 3.4, >= 3.4.1)
+    watir-webdriver (0.9.9)
+      selenium-webdriver (>= 2.46.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  chromedriver-helper
+  phashion
+  selenium-webdriver
+  watir (>= 6.2.0)
+  watir-webdriver (>= 0.9.9)
+
+BUNDLED WITH
+   1.15.4
