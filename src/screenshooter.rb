@@ -6,9 +6,10 @@ class Screenshooter
   end
 
   def generate_local_screenshots
-    folder_tree = FolderTree.new    
-    folder_tree.generate_folder_tree()
+    folder_tree = FolderTree.new
+    folder_tree.generate_folder_tree
     progressbar = ProgressBar.new(folder_tree.component_paths.length * @widths.length)
+    
     folder_tree.component_paths.each do |component_name, path|
       @browser.goto('file://' + path + '/index.html')
       @widths.each do |width|
