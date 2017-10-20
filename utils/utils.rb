@@ -27,6 +27,6 @@ def replace_all_texts(browser, selector, text)
   browser.execute_script("document.querySelectorAll('#{selector}').forEach(item => { item.innerHTML = '#{text}'})")
 end
 
-def get_page_height
-  browser.execute_script('return document.body.clientHeight')
+def get_page_height(browser)
+  browser.execute_script(" return document.body.scrollHeight")
 end
