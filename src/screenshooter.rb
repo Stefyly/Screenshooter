@@ -2,7 +2,7 @@ class Screenshooter
   def initialize(browser)
     @browser = browser
     # HACK: for firefox screenshoots
-    browser_configure(browser)
+    browser_configure()
     @widths = CONFIG['widths']
     @folder_tree = FolderTree.new
   end
