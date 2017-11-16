@@ -24,7 +24,7 @@ class Screenshooter
     @widths.each do |width|
       @browser.window.resize_to(width, 0) # HACK: for firefox screenshoots
       @folder_tree.component_paths.each do |component_name, path|
-        @browser.goto('file://' + path + '/index.html')
+        @browser.goto('file://' + path)
         @browser.window.resize_to(width, get_page_height(@browser) + @vertical_offset)
         @browser.driver.save_screenshot(@folder_tree.get_pict_path(component_name, width))
         progressbar.increment!

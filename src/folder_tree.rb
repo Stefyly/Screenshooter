@@ -12,9 +12,11 @@ class FolderTree
 
   # output [component name => full path to component]
   def get_component_paths
-    names = Dir.entries(CONFIG['mockup_path']).reject { |dir| dir.include?('.') }
-    full_path = names.map { |dir| dir = CONFIG['mockup_path'] + dir }
-    return Hash[names.zip(full_path)]
+    full_path = Dir.glob(CONFIG['mockup_path'] + '/**/**/wireframe/dist/index.html')
+    names = full_path.map do |name|
+      name = /(?<=blocks-library\/)\w+\/\w+/.match(name).to_s
+    end
+    Hash[names.zip(full_path)]
   end
 
   def create_folder(new_folder)
@@ -32,7 +34,7 @@ class FolderTree
 
     @component_paths.each_key do |_components|
       unless File.directory?(@current_folder + _components)
-        Dir.mkdir(@current_folder + _components)
+        FileUtils.mkpath(@current_folder + _components)
       end
     end
     self
