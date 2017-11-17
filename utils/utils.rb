@@ -19,14 +19,6 @@ def browser_factory(browser_name)
   end
 end
 
-def replace_first_text(browser, selector, text)
-  browser.execute_script("document.querySelector('#{selector}').innerHTML = '#{text}'")
-end
-
-def replace_all_texts(browser, selector, text)
-  browser.execute_script("document.querySelectorAll('#{selector}').forEach(item => { item.innerHTML = '#{text}'})")
-end
-
 def get_page_height(browser)
   browser.execute_script(" return document.body.scrollHeight")
 end
