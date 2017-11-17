@@ -5,7 +5,7 @@ class Executor
     @state = 0
   end
 
-  def comand_go
+  def next_command
     if @comands[@state].first.is_a?(Array)
       @comands[@state].each do |current_comand|
         execute_comand(current_comand)
@@ -52,7 +52,6 @@ class Executor
   def copy_element(el_to_copy, paste_inside)
     # p 'copy_element el_to_copy: ' + el_to_copy + 'paste_inside: ' + paste_inside
     out = @browser.execute_script("return document.querySelector('#{el_to_copy}').outerHTML")
-    p ' ITS MY OUTER HTML' + out
     @browser.execute_script("document.querySelector('#{paste_inside}').innerHTML += '#{out}'")
   end
 

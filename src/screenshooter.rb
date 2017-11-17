@@ -1,10 +1,15 @@
 class Screenshooter
-  def initialize(browser)
+  # mode
+  # full - screenshoot all blocks for adaptivity check
+  # state - screenshoot blocks with states config
+  def initialize(browser, mode = 'full', ex = nil)
+    @ex = ex
+    @run_mode = mode
     @browser = browser
     # HACK: for firefox screenshoots
-    browser_configure()
+    browser_configure
     @widths = CONFIG['widths']
-    @folder_tree = FolderTree.new
+    @folder_tree = FolderTree.new(mode)
   end
 
   def browser_configure
@@ -17,13 +22,13 @@ class Screenshooter
     end
   end
 
-  def generate_local_screenshots
-    progressbar = ProgressBar.new(@folder_tree.component_paths.length * @widths.length)
-    @folder_tree.generate_folder_tree(@browser_name)
+  def screenshot_all
+    progressbar = ProgressBar.new(@folder_tree.block_paths.length * @widths.length)
+    @folder_tree.full_folder_tree(@browser_name)
 
     @widths.each do |width|
       @browser.window.resize_to(width, 0) # HACK: for firefox screenshoots
-      @folder_tree.component_paths.each do |component_name, path|
+      @folder_tree.block_paths.each do |component_name, path|
         @browser.goto('file://' + path)
         @browser.window.resize_to(width, get_page_height(@browser) + @vertical_offset)
         @browser.driver.save_screenshot(@folder_tree.get_pict_path(component_name, width))
@@ -31,5 +36,24 @@ class Screenshooter
       end
     end
   end
+
+  def screenshot_states
+    progressbar = ProgressBar.new(@folder_tree.block_paths.length * @widths.length)
+    @folder_tree.full_folder_tree(@browser_name)
+    @folder_tree.block_paths.each do |component_name, path|
+      @browser.goto('file://' + path)
+      9.times do |i|
+        @ex.next_command        
+        @widths.each do |width|
+          @browser.window.resize_to(width, 0) # HACK: for firefox screenshoots
+          @browser.window.resize_to(width, get_page_height(@browser) + @vertical_offset)
+          # @folder_tree.get_pict_path('heastate' + i.to_s, width)
+          @browser.driver.save_screenshot("./screenshots/Firefox/header/header_1/img#{width}_state#{i}.png")
+        end
+        progressbar.increment!
+      end
+    end
+  end
+
   private :browser_configure
 end
