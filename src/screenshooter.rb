@@ -9,7 +9,7 @@ class Screenshooter
     # HACK: for firefox screenshoots
     browser_configure
     @widths = CONFIG['widths']
-    @folder_tree = FolderTree.new(mode)
+    @folder_tree = StateFolderTree.new
   end
 
   def browser_configure
@@ -38,9 +38,9 @@ class Screenshooter
   end
 
   def screenshot_states
-    progressbar = ProgressBar.new(@folder_tree.block_paths.length * @widths.length)
-    @folder_tree.full_folder_tree(@browser_name)
-    @folder_tree.block_paths.each do |component_name, path|
+    #progressbar = ProgressBar.new(@folder_tree.block_paths.length * @widths.length)
+    @folder_tree.init_folder_tree
+    @folder_tree.blocks_path_in_library.each do |component_name, path|
       @ex.commands_from_file(component_name)
       @browser.goto('file://' + path)
       @ex.state_count.times do |i|
@@ -49,9 +49,9 @@ class Screenshooter
           @browser.window.resize_to(width, 0) # HACK: for firefox screenshoots
           @browser.window.resize_to(width, get_page_height(@browser) + @vertical_offset)
           # @folder_tree.get_pict_path('heastate' + i.to_s, width)
-          @browser.driver.save_screenshot("./screenshots/Firefox/#{component_name}/img#{width}_state#{i}.png")
+          @browser.driver.save_screenshot("./screenshots/states/#{component_name}/img#{width}_state#{i}.png")
         end
-        progressbar.increment!
+        #progressbar.increment!
       end
     end
   end

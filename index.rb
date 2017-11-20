@@ -9,8 +9,7 @@ require_relative './utils/deps.rb'
 # CHECK how to improve state config type
 # DOCK for this shit
 
-browser = browser_factory('Firefox')
-#browser = Watir::Browser.new :firefox
+browser = browser_factory('Chrome')
 ex = Executor.new(browser)
 scr = Screenshooter.new(browser, 'state', ex)
 scr.screenshot_states

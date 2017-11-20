@@ -46,23 +46,15 @@ class FolderTree
     set_current_folder(root_folder)
 
     @block_paths.each_key do |_components|
-      unless File.directory?(@current_folder + _components)
+      unless File.directory?(@current_folder + '/' + _components)
         FileUtils.mkpath(@current_folder + _components)
       end
     end
     self
   end
 
-  #generate blockpaths from existed state
-  #header_1.yaml - > header/header_1 
-  def block_path_names
-    names = Dir.entries('./states/').reject { |name| name[0] == '.' }
-    names.map do |name|
-      block_category = /[a-z]*[^_yml]/.match(name).to_s
-      block_version = /\w+[^_.yml]/.match(name).to_s
-      name = [block_category, block_version].join('/')
-    end
-  end
+
+
   private :get_block_paths
   attr_reader :block_paths, :current_folder
 end

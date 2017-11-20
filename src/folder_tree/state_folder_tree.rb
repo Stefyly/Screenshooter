@@ -24,8 +24,8 @@ class StateFolderTree
     end
   end
 
-  #get hash of blocks names and its full path which have configs in /states folder
-  #in format 
+  # get hash of blocks names and its full path which have configs in /states folder
+  # in format 
     # key - folder/subfolder
     # value - full path 
     # blocks-library/<block-category>/<block-verson>/wireframe/dist/index.html
