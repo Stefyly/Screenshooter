@@ -50,9 +50,7 @@ class Executor
   end
 
   def copy_element(el_to_copy, paste_inside)
-    # p 'copy_element el_to_copy: ' + el_to_copy + 'paste_inside: ' + paste_inside
-    out = @browser.execute_script("return document.querySelector('#{el_to_copy}').outerHTML")
-    @browser.execute_script("document.querySelector('#{paste_inside}').innerHTML += '#{out}'")
+    @browser.execute_script("document.querySelector('#{paste_inside}').innerHTML += #{"document.querySelector('#{el_to_copy}').outerHTML"}")
   end
 
   def refresh_page
