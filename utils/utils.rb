@@ -10,10 +10,7 @@ def browser_factory(browser_name)
       --disable-gpu
     ]
   when 'Firefox'
-    options = Selenium::WebDriver::Firefox::Options.new(
-      args: ['-headless']
-    )
-    Watir::Browser.new :firefox, options: options
+    Watir::Browser.new :firefox, headless: true
   when 'Safari'
     Watir::Browser.new :safari
   end
