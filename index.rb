@@ -1,5 +1,4 @@
 require_relative './utils/deps.rb'
-header_1 = YAML.safe_load(File.read(File.join(File.dirname(__FILE__), "/states/header_1.yml")))
 
 # TO DO!!!
 # ADD Logic for several block state
@@ -12,7 +11,7 @@ header_1 = YAML.safe_load(File.read(File.join(File.dirname(__FILE__), "/states/h
 
 browser = browser_factory('Firefox')
 #browser = Watir::Browser.new :firefox
-ex = Executor.new(browser, header_1['states'])
+ex = Executor.new(browser)
 scr = Screenshooter.new(browser, 'state', ex)
 scr.screenshot_states
 browser.close
