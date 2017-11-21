@@ -37,4 +37,10 @@ class StateFolderTree
     end
     Hash[@states.zip(full_path)]
   end
+
+  # get picture path for saving
+  def pict_name(folder, *information)
+    info = 'state_' + information.join('_')
+    [@current_folder, folder, info].join('/') << '.png'
+  end
 end

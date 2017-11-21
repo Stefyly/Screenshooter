@@ -38,21 +38,20 @@ class Screenshooter
   end
 
   def screenshot_states
-    #progressbar = ProgressBar.new(@folder_tree.block_paths.length * @widths.length)
     @folder_tree.init_folder_tree
+    progressbar = ProgressBar.new(@folder_tree.blocks_path_in_library.length)
     @folder_tree.blocks_path_in_library.each do |component_name, path|
       @ex.commands_from_file(component_name)
       @browser.goto('file://' + path)
       @ex.state_count.times do |i|
-        @ex.next_command        
+        @ex.next_command
         @widths.each do |width|
           @browser.window.resize_to(width, 0) # HACK: for firefox screenshoots
           @browser.window.resize_to(width, get_page_height(@browser) + @vertical_offset)
-          # @folder_tree.get_pict_path('heastate' + i.to_s, width)
-          @browser.driver.save_screenshot("./screenshots/states/#{component_name}/img#{width}_state#{i}.png")
+          @browser.driver.save_screenshot(@folder_tree.pict_name(component_name,i,width))
         end
-        #progressbar.increment!
       end
+      progressbar.increment!             
     end
   end
 
