@@ -1,5 +1,4 @@
 require 'watir'
-require 'phashion'
 require 'progress_bar'
 require 'fileutils'
 require 'yaml'

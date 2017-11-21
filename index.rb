@@ -1,8 +1,4 @@
 require_relative './utils/deps.rb'
-# TO DO
-# IMPLEMENT REPLACE BUTTON TO LINK
-# button click
-# add to the end of the list /// copy to begin of list
 
 browser = browser_factory('Chrome')
 ex = Executor.new(browser)
