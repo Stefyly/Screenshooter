@@ -19,12 +19,14 @@ class Executor
     end
     @current_state += 1
   end
+
   def commands_from_file(component_name)
     obj = YAML.safe_load(File.read(File.join(File.dirname(__FILE__), '../states/' + parse_filename(component_name))))
     @comands = obj['states']
     @state_count = obj['total']
     @current_state = 0
   end
+
   def execute_comand(cmd)
     case cmd[0]
     when 'set_text'
@@ -38,7 +40,7 @@ class Executor
         end
       else
         copy_element(cmd[1], cmd[2])
-        end
+      end
     when 'refresh'
       refresh_page
     end

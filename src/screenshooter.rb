@@ -1,12 +1,12 @@
 class Screenshooter
-  def initialize(browser, ex = nil)
-    @ex = ex
+  def initialize(browser)
     @browser = browser
+
     # HACK: for firefox screenshoots
     browser_configure
     @widths = CONFIG['widths']
   end
-    attr_writer :folder_manager
+    attr_writer :folder_manager, :executor
 
   def browser_configure
     if @browser.driver.is_a?(Selenium::WebDriver::Firefox::Marionette::Driver)
@@ -36,10 +36,10 @@ class Screenshooter
     @folder_manager.init_folder_tree
     progressbar = ProgressBar.new(@folder_manager.block_paths.length)
     @folder_manager.block_paths.each do |component_name, path|
-      @ex.commands_from_file(component_name)
+      @executor.commands_from_file(component_name)
       @browser.goto('file://' + path)
-      @ex.state_count.times do |i|
-        @ex.next_command
+      @executor.state_count.times do |i|
+        @executor.next_command
         @widths.each do |width|
           @browser.window.resize_to(width, 0) # HACK: for firefox screenshoots
           @browser.window.resize_to(width, get_page_height(@browser) + @vertical_offset)
