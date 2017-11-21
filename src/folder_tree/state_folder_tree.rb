@@ -1,8 +1,8 @@
-class StateFolderTree
+class StateFolderTree < FolderTree
   def initialize
     FileUtils.mkpath('./screenshots/states') unless File.directory?('./screenshots/states')
     @current_folder = './screenshots/states'
-    @blocks = existed_states
+    @blocks = block_paths
   end
 
   # generate list of folder and subfolder names form ./states in format folder/subfolder
@@ -17,14 +17,6 @@ class StateFolderTree
     end
   end
 
-  def init_folder_tree
-    @states.each do |state|
-      unless File.directory?(@current_folder + '/' + state)
-        FileUtils.mkpath(@current_folder + '/' + state)
-      end
-    end
-  end
-
   # get hash of blocks names and its full path which have configs in /states folder
   # in format
   # key - folder/subfolder
@@ -32,16 +24,14 @@ class StateFolderTree
   #   blocks-library/<block-category>/<block-verson>/wireframe/dist/index.html
   #   example = "header/header_1" => "PATH/header_1/wireframe/dist/index.html"
   def block_paths
+    blocks = existed_states
     full_path = []
-    @states.each do |state|
-      full_path << (CONFIG['mockup_path'] + '/' + state + '/wireframe/dist/index.html')
+    blocks.each do |block|
+      full_path << (CONFIG['mockup_path'] + '/' + block + '/wireframe/dist/index.html')
     end
-    Hash[@states.zip(full_path)]
+    Hash[blocks.zip(full_path)]
   end
 
   # get picture path for saving
-  def pict_name(folder, *information)
-    info = 'state_' + information.join('_')
-    [@current_folder, folder, info].join('/') << '.png'
-  end
+
 end
