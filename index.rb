@@ -1,16 +1,10 @@
 require_relative './utils/deps.rb'
-
-# TO DO!!!
-# ADD Logic for several block state
-# ADD add state counter instead of 9.times do |i|
-# Fix - get_pict_path doesn't work in screenshot_states 
-# REFACTOR Folder tree - its rabish!!!!
-# REFACTOR Screenshooter separate logic for scr_all and state
-# CHECK how to improve state config type
-# DOCK for this shit
+# TO DO
+# IMPLEMENT REPLACE BUTTON TO LINK
 
 browser = browser_factory('Chrome')
 ex = Executor.new(browser)
-scr = Screenshooter.new(browser, 'state', ex)
+scr = Screenshooter.new(browser, ex)
+scr.folder_manager = StateFolderTree.new
 scr.screenshot_states
 browser.close

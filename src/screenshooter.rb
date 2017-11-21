@@ -2,7 +2,7 @@ class Screenshooter
   # mode
   # full - screenshoot all blocks for adaptivity check
   # state - screenshoot blocks with states config
-  def initialize(browser, mode = 'full', ex = nil)
+  def initialize(browser, ex = nil)
     @ex = ex
     @browser = browser
     # HACK: for firefox screenshoots
