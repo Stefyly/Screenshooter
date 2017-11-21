@@ -1,7 +1,4 @@
 class Screenshooter
-  # mode
-  # full - screenshoot all blocks for adaptivity check
-  # state - screenshoot blocks with states config
   def initialize(browser, ex = nil)
     @ex = ex
     @browser = browser
@@ -24,12 +21,12 @@ class Screenshooter
   def screenshot_all
     progressbar = ProgressBar.new(@folder_manager.block_paths.length * @widths.length)
     @folder_manager.init_folder_tree
-    @widths.each do |width|
-      @browser.window.resize_to(width, 0) # HACK: for firefox screenshoots
       @folder_manager.block_paths.each do |component_name, path|
         @browser.goto('file://' + path)
-        @browser.window.resize_to(width, get_page_height(@browser) + @vertical_offset)
-        @browser.driver.save_screenshot(@folder_manager.pict_name(component_name, width))
+        @widths.each do |width|
+          @browser.window.resize_to(width, 0) # HACK: for firefox screenshoots  
+          @browser.window.resize_to(width, get_page_height(@browser) + @vertical_offset)
+          @browser.driver.save_screenshot(@folder_manager.pict_name(component_name, width))
         progressbar.increment!
       end
     end
