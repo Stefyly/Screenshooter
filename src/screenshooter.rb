@@ -9,7 +9,7 @@ class Screenshooter
     # HACK: for firefox screenshoots
     browser_configure
     @widths = CONFIG['widths']
-    @folder_tree = StateFolderTree.new
+    @folder_manager = StateFolderTree.new
   end
 
   def browser_configure
@@ -23,24 +23,24 @@ class Screenshooter
   end
 
   def screenshot_all
-    progressbar = ProgressBar.new(@folder_tree.block_paths.length * @widths.length)
-    @folder_tree.full_folder_tree(@browser_name)
+    progressbar = ProgressBar.new(@folder_manager.block_paths.length * @widths.length)
+    @folder_manager.full_folder_tree(@browser_name)
 
     @widths.each do |width|
       @browser.window.resize_to(width, 0) # HACK: for firefox screenshoots
-      @folder_tree.block_paths.each do |component_name, path|
+      @folder_manager.block_paths.each do |component_name, path|
         @browser.goto('file://' + path)
         @browser.window.resize_to(width, get_page_height(@browser) + @vertical_offset)
-        @browser.driver.save_screenshot(@folder_tree.get_pict_path(component_name, width))
+        @browser.driver.save_screenshot(@folder_manager.get_pict_path(component_name, width))
         progressbar.increment!
       end
     end
   end
 
   def screenshot_states
-    @folder_tree.init_folder_tree
-    progressbar = ProgressBar.new(@folder_tree.blocks_path_in_library.length)
-    @folder_tree.blocks_path_in_library.each do |component_name, path|
+    @folder_manager.init_folder_tree
+    progressbar = ProgressBar.new(@folder_manager.blocks_path_in_library.length)
+    @folder_manager.blocks_path_in_library.each do |component_name, path|
       @ex.commands_from_file(component_name)
       @browser.goto('file://' + path)
       @ex.state_count.times do |i|
@@ -48,7 +48,7 @@ class Screenshooter
         @widths.each do |width|
           @browser.window.resize_to(width, 0) # HACK: for firefox screenshoots
           @browser.window.resize_to(width, get_page_height(@browser) + @vertical_offset)
-          @browser.driver.save_screenshot(@folder_tree.pict_name(component_name,i,width))
+          @browser.driver.save_screenshot(@folder_manager.pict_name(component_name,i,width))
         end
       end
       progressbar.increment!             

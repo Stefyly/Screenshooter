@@ -8,6 +8,7 @@ def browser_factory(browser_name)
       --disable-translate
       --ignore-certificate-errors
       --disable-gpu
+      --hide-scrollbars
     ]
   when 'Firefox'
     Watir::Browser.new :firefox, headless: true
@@ -17,5 +18,5 @@ def browser_factory(browser_name)
 end
 
 def get_page_height(browser)
-  browser.execute_script(" return document.body.scrollHeight")
+  browser.execute_script('return document.body.scrollHeight')
 end
