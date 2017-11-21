@@ -20,8 +20,8 @@ class Executor
     @current_state += 1
   end
   def commands_from_file(component_name)
-    obj = YAML.safe_load(File.read(File.join(File.dirname(__FILE__), "../states/#{component_name.split('/')[1]}.yml")))
-    @comands = obj['states']    
+    obj = YAML.safe_load(File.read(File.join(File.dirname(__FILE__), '../states/' + parse_filename(component_name))))
+    @comands = obj['states']
     @state_count = obj['total']
     @current_state = 0
   end
@@ -65,5 +65,9 @@ class Executor
   def refresh_page
     # p 'refresh page'
     @browser.refresh
+  end
+
+  def parse_filename(str)
+    str.split('/')[1] + '_' + /[0-9]/.match(str).to_s + '.yml'
   end
 end

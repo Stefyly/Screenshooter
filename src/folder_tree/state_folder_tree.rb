@@ -7,13 +7,13 @@ class StateFolderTree < FolderTree
 
   # generate list of folder and subfolder names form ./states in format folder/subfolder
   # input  -> header_1.yml
-  # output -> header/header_1
+  # output -> d-1/header
   def existed_states
     folders = Dir.entries('./states/').reject { |name| name[0] == '.' }
     folders.map do |name|
-      block_category = /[a-z]*[^_yml]/.match(name).to_s
-      block_version = /\w+[^_.yml]/.match(name).to_s
-      folders = [block_category, block_version].join('/')
+      block_version = /[0-9]/.match(name).to_s
+      block_category = /[a-z]+[^_.yml]/.match(name).to_s
+      folders = ['d-'+block_version, block_category].join('/')
     end
   end
 
@@ -27,7 +27,7 @@ class StateFolderTree < FolderTree
     blocks = existed_states
     full_path = []
     blocks.each do |block|
-      full_path << (CONFIG['mockup_path'] + '/' + block + '/wireframe/dist/index.html')
+      full_path << (CONFIG['mockup_path'] + '/wireframes/' + block + '/dist/index.html')
     end
     Hash[blocks.zip(full_path)]
   end

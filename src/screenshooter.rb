@@ -18,7 +18,7 @@ class Screenshooter
     end
   end
 
-  def screenshot_all
+  def screenshot_full
     progressbar = ProgressBar.new(@folder_manager.block_paths.length * @widths.length)
     @folder_manager.init_folder_tree
       @folder_manager.block_paths.each do |component_name, path|
