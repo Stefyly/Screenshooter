@@ -2,11 +2,12 @@ class StateFolderTree
   def initialize
     FileUtils.mkpath('./screenshots/states') unless File.directory?('./screenshots/states')
     @current_folder = './screenshots/states'
-    @states = existed_states
+    @blocks = existed_states
   end
 
-  # generate folder and subfolder names form ./states in format folder/subfolder
-  # header_1.yml - > header/header_1
+  # generate list of folder and subfolder names form ./states in format folder/subfolder
+  # input  -> header_1.yml
+  # output -> header/header_1
   def existed_states
     folders = Dir.entries('./states/').reject { |name| name[0] == '.' }
     folders.map do |name|
@@ -25,12 +26,12 @@ class StateFolderTree
   end
 
   # get hash of blocks names and its full path which have configs in /states folder
-  # in format 
-    # key - folder/subfolder
-    # value - full path 
-    # blocks-library/<block-category>/<block-verson>/wireframe/dist/index.html
-    # "header/header_1"=>"/Users/bohdan/Documents/blocks-library/header/header_1/wireframe/dist/index.html"
-  def blocks_path_in_library
+  # in format
+  # key - folder/subfolder
+  #   value - full path
+  #   blocks-library/<block-category>/<block-verson>/wireframe/dist/index.html
+  #   example = "header/header_1" => "PATH/header_1/wireframe/dist/index.html"
+  def block_paths
     full_path = []
     @states.each do |state|
       full_path << (CONFIG['mockup_path'] + '/' + state + '/wireframe/dist/index.html')
