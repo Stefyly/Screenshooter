@@ -1,4 +1,4 @@
-require_relative './utils/deps.rb'
+require_relative '.src/utils/deps.rb'
 
 browser = browser_factory('Chrome')
 ex = Executor.new(browser)

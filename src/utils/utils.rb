@@ -1,6 +1,6 @@
 def browser_factory(browser_name)
   case browser_name
-  when 'Chrome'
+  when 'chrome'
     Watir::Browser.new :chrome, switches: %w[
       --headless
       --allow-running-insecure-content
@@ -10,9 +10,9 @@ def browser_factory(browser_name)
       --disable-gpu
       --hide-scrollbars
     ]
-  when 'Firefox'
+  when 'firefox'
     Watir::Browser.new :firefox, headless: true
-  when 'Safari'
+  when 'safari'
     Watir::Browser.new :safari
   end
 end

@@ -1,4 +1,4 @@
-require_relative './utils/deps.rb'
+require_relative './src/utils/deps.rb'
 # TO DO
 # IMPLEMENT REPLACE BUTTON TO LINK
 # button click
@@ -6,8 +6,10 @@ require_relative './utils/deps.rb'
 # add styles
 task default: %w[full]
 
-task :states do
-  browser = browser_factory('Chrome')
+#:br -> browser_name
+task :states, [:br] do |t, args|
+  browser_name = args[:br].nil? ? 'chrome' : args[:br]
+  browser = browser_factory(browser_name)
   scr = Screenshooter.new(browser)
   scr.executor = Executor.new(browser)  
   scr.folder_manager = StateFolderTree.new
@@ -16,7 +18,7 @@ task :states do
 end
 
 task :full do
-  browser = browser_factory('Chrome')
+  browser = browser_factory('chrome')
   scr = Screenshooter.new(browser)
   scr.folder_manager = FullFolderTree.new
   scr.screenshot_full
