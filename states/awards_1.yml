@@ -1,0 +1,23 @@
+states: [
+  [refresh],
+  [remove, '.item'],
+  [remove, '.item'],
+  [
+   [refresh],
+   [copy, '.item', '.items-wrapper']
+  ],
+  [copy, '.item', '.items-wrapper'],
+  [copy, '.item', '.items-wrapper'],
+  [
+   [refresh],
+   [remove, '.subtitle']
+  ],
+  [
+    [remove, '.item__title'],
+    [remove, '.item__title'],
+    [remove, '.item__title'],
+    [remove, '.item__title']
+   ],
+  [remove, 'button']
+]
+total: 9

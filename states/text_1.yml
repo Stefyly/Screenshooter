@@ -1,0 +1,76 @@
+states: [
+  [refresh],
+  [add_style, '.section__inner', 'text-align:left'],
+  [add_style, '.section__inner', 'text-align:right'],
+  [
+    [refresh],
+    [remove, '.subtitle']
+  ],
+  [
+    [refresh],
+    [remove, '.subheading']
+  ],
+  [
+    [refresh],
+    [remove, '.heading']
+  ],
+  [
+    [refresh],
+    [remove, '.text']
+  ],
+  [
+    [refresh],
+    [remove, '.subtitle'],
+    [remove, '.subheading']
+  ],
+  [
+    [refresh],
+    [remove, '.subtitle'],
+    [remove, '.heading']
+  ],
+  [
+    [refresh],
+    [remove, '.subtitle'],
+    [remove, '.text']
+  ],
+  [
+    [refresh],
+    [remove, '.heading'],
+    [remove, '.subheading']
+  ],
+  [
+    [refresh],
+    [remove, '.heading'],
+    [remove, '.text']
+  ],
+  [
+    [refresh],
+    [remove, '.subheading'],
+    [remove, '.text']
+  ],
+  [
+    [refresh],
+    [remove, '.subtitle'],
+    [remove, '.heading'],
+    [remove, '.subheading']
+  ],
+   [
+    [refresh],
+    [remove, '.subtitle'],
+    [remove, '.heading'],
+    [remove, '.text']
+  ],
+   [
+    [refresh],
+    [remove, '.subtitle'],
+    [remove, '.text'],
+    [remove, '.subheading']
+  ],
+   [
+    [refresh],
+    [remove, '.heading'],
+    [remove, '.subheading'],
+    [remove, '.text']
+  ]
+]
+total: 17
