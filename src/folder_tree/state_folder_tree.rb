@@ -1,19 +1,23 @@
 class StateFolderTree < FolderTree
+  attr_accessor :single_file
   def initialize
     FileUtils.mkpath('./screenshots/states') unless File.directory?('./screenshots/states')
     @current_folder = './screenshots/states'
     @blocks = block_paths
   end
-
   # generate list of folder and subfolder names form ./states in format folder/subfolder
   # input  -> header_1.yml
   # output -> d-1/header
   def existed_states
-    folders = Dir.entries('./states/').reject { |name| name[0] == '.' }
+    folders = if @single_file.nil?
+                Dir.entries('./states/').reject { |name| name[0] == '.' }
+              else
+                [single_file]
+              end
     folders.map do |name|
       block_version = /[0-9]/.match(name).to_s
       block_category = /[a-z]+[^_.yml]/.match(name).to_s
-      folders = ['d-'+block_version, block_category].join('/')
+      folders = ['d-' + block_version, block_category].join('/')
     end
   end
 
@@ -31,7 +35,4 @@ class StateFolderTree < FolderTree
     end
     Hash[blocks.zip(full_path)]
   end
-
-  # get picture path for saving
-
 end

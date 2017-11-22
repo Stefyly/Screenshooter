@@ -115,7 +115,7 @@ class Executor
       s = document.querySelector('#{second}');
       p.insertBefore(s, f);
     ")
-  end 
+  end
 
   # return innerHTML of the element
   def i_html(selector)

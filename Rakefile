@@ -1,18 +1,18 @@
 require_relative './src/utils/deps.rb'
 # TO DO
-# IMPLEMENT REPLACE BUTTON TO LINK
 # button click
-# add to the end of the list /// copy to begin of list
-# add styles
+#extra cases for mobile
 task default: %w[full]
 
 #:br -> browser_name
-task :states, [:br] do |t, args|
+task :states, [:file, :br] do |t, args|
   browser_name = args[:br].nil? ? 'chrome' : args[:br]
   browser = browser_factory(browser_name)
   scr = Screenshooter.new(browser)
-  scr.executor = Executor.new(browser)  
-  scr.folder_manager = StateFolderTree.new
+  scr.executor = Executor.new(browser)
+  ff = StateFolderTree.new
+  ff.single_file = args[:file]
+  scr.folder_manager = ff
   scr.screenshot_states
   browser.close
 end
