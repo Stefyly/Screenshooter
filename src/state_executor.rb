@@ -9,6 +9,11 @@ class Executor
     @comands = comands
   end
 
+  def change_attr(atr ,sel, str)
+    @browser.execute_script("document.querySelector('#{sel}')
+                                     .setAttribute(\"#{atr}\",\"#{str}\")")
+  end
+
   def next_command
     if @comands[@current_state].first.is_a?(Array)
       @comands[@current_state].each do |current_comand|
@@ -79,19 +84,16 @@ class Executor
   end
 
   def add_style(selector, style)
-    @browser.execute_script("document.querySelector('#{selector}')
-                                     .setAttribute(\"style\",\"#{style}\")")
+    change_attr(:style, selector, style)
   end
 
   def replace_class(selector, klass)
-    @browser.execute_script("document.querySelector('#{selector}')
-                                     .setAttribute(\"class\",\"#{klass}\")")
+    change_attr(:class, selector, klass)
   end
 
   def add_class(selector, klass)
     str = [@browser.element(css: selector).attribute_value('class'), klass].join(' ')
-    @browser.execute_script("document.querySelector('#{selector}')
-                                     .setAttribute(\"class\",\"#{str}\")")
+    change_attr(:class, selector, str)
   end
 
   def parse_filename(str)
