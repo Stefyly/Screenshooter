@@ -26,11 +26,12 @@ class Executor
     @state_count = obj['total']
     @current_state = 0
   end
-
+  
+# NEED REFACTOR
   def execute_comand(cmd)
     case cmd[0]
-    when 'set_text'
-      set_text(cmd[1], cmd[2])
+    when 'replace_text'
+      replace_text(cmd[1], cmd[2])
     when 'remove'
       remove_element(cmd[1])
     when 'copy'
@@ -45,10 +46,18 @@ class Executor
       el_to_link(cmd[1])
     when 'refresh'
       refresh_page
+    when 'add_style'
+      add_style(cmd[1], cmd[2])
+    when 'replace_class'
+      replace_class(cmd[1], cmd[2])
+    when 'add_class'
+      replace_class(cmd[1], cmd[2])
+    when 'add_el_to_begin'
+      add_el_to_begin(cmd[1], cmd[2])
     end
   end
 
-  def set_text(selector, text)
+  def replace_text(selector, text)
     # p 'set_text selector:' + selector + 'text' + text
     @browser.execute_script("#{i_html(selector)} = '#{text}'")
   end
