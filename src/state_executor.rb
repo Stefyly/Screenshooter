@@ -33,7 +33,13 @@ class Executor
     when 'replace_text'
       replace_text(cmd[1], cmd[2])
     when 'remove'
-      remove_element(cmd[1])
+      if cmd.size == 3
+        cmd[1].times do
+          remove_element(cmd[2])
+        end
+      else
+        remove_element(cmd[1])
+      end
     when 'copy'
       if cmd.size == 4
         cmd[1].times do
