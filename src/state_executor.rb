@@ -41,6 +41,8 @@ class Executor
       else
         copy_element(cmd[1], cmd[2])
       end
+    when 'el_to_link'
+      el_to_link(cmd[1])
     when 'refresh'
       refresh_page
     end
@@ -69,6 +71,12 @@ class Executor
     @browser.refresh
   end
 
+  # Dirty implementation of the element replacing method
+  def el_to_link(selector)
+    link = '<a style = \"text-decoration: underline\" class=\"link\"> Link instead of button </a>'
+    @browser.execute_script("return document.querySelector('#{selector}').outerHTML = '#{link}' ")
+  end
+    
   def parse_filename(str)
     str.split('/')[1] + '_' + /[0-9]/.match(str).to_s + '.yml'
   end
