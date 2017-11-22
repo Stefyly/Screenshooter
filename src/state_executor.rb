@@ -74,9 +74,26 @@ class Executor
   # Dirty implementation of the element replacing method
   def el_to_link(selector)
     link = '<a style = \"text-decoration: underline\" class=\"link\"> Link instead of button </a>'
-    @browser.execute_script("return document.querySelector('#{selector}').outerHTML = '#{link}' ")
+    @browser.execute_script("document.querySelector('#{selector}')
+                                     .outerHTML = '#{link}'")
   end
-    
+
+  def add_style(selector, style)
+    @browser.execute_script("document.querySelector('#{selector}')
+                                     .setAttribute(\"style\",\"#{style}\")")
+  end
+
+  def replace_class(selector, klass)
+    @browser.execute_script("document.querySelector('#{selector}')
+                                     .setAttribute(\"class\",\"#{klass}\")")
+  end
+
+  def add_class(selector, klass)
+    str = [@browser.element(css: selector).attribute_value('class'), klass].join(' ')
+    @browser.execute_script("document.querySelector('#{selector}')
+                                     .setAttribute(\"class\",\"#{str}\")")
+  end
+
   def parse_filename(str)
     str.split('/')[1] + '_' + /[0-9]/.match(str).to_s + '.yml'
   end
