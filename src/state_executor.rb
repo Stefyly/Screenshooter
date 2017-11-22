@@ -26,7 +26,7 @@ class Executor
     @state_count = obj['total']
     @current_state = 0
   end
-  
+
 # NEED REFACTOR
   def execute_comand(cmd)
     case cmd[0]
@@ -54,6 +54,8 @@ class Executor
       replace_class(cmd[1], cmd[2])
     when 'add_el_to_begin'
       add_el_to_begin(cmd[1], cmd[2])
+    when 'swap_el'
+      swap_el(cmd[1], cmd[2])
     end
   end
 
@@ -104,6 +106,16 @@ class Executor
                               #{o_html(el_for_insert)} + #{i_html(parent_node)}
                            ")
   end
+
+  # swap 2 elements in DOM
+  def swap_el(first, second)
+    @browser.execute_script("
+      p = document.querySelector('#{first}').parentNode;
+      f = document.querySelector('#{first}');
+      s = document.querySelector('#{second}');
+      p.insertBefore(s, f);
+    ")
+  end 
 
   # return innerHTML of the element
   def i_html(selector)
