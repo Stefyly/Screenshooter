@@ -9,11 +9,6 @@ class Executor
     @comands = comands
   end
 
-  def change_attr(atr ,sel, str)
-    @browser.execute_script("document.querySelector('#{sel}')
-                                     .setAttribute(\"#{atr}\",\"#{str}\")")
-  end
-
   def next_command
     if @comands[@current_state].first.is_a?(Array)
       @comands[@current_state].each do |current_comand|
@@ -55,7 +50,7 @@ class Executor
 
   def set_text(selector, text)
     # p 'set_text selector:' + selector + 'text' + text
-    @browser.execute_script("document.querySelector('#{selector}').innerHTML = '#{text}'")
+    @browser.execute_script("#{i_html(selector)} = '#{text}'")
   end
 
   def replace_texts(selector, text)
@@ -68,7 +63,7 @@ class Executor
   end
 
   def copy_element(el_to_copy, paste_inside)
-    @browser.execute_script("document.querySelector('#{paste_inside}').innerHTML += #{"document.querySelector('#{el_to_copy}').outerHTML"}")
+    @browser.execute_script("#{i_html(paste_inside)} += #{o_html(el_to_copy)}")
   end
 
   def refresh_page
@@ -79,8 +74,7 @@ class Executor
   # Dirty implementation of the element replacing method
   def el_to_link(selector)
     link = '<a style = \"text-decoration: underline\" class=\"link\"> Link instead of button </a>'
-    @browser.execute_script("document.querySelector('#{selector}')
-                                     .outerHTML = '#{link}'")
+    @browser.execute_script("#{o_html(selector)} = '#{link}' ")
   end
 
   def add_style(selector, style)
@@ -94,6 +88,27 @@ class Executor
   def add_class(selector, klass)
     str = [@browser.element(css: selector).attribute_value('class'), klass].join(' ')
     change_attr(:class, selector, str)
+  end
+
+  def add_el_to_begin(el_for_insert, parent_node)
+    @browser.execute_script(" #{i_html(parent_node)} =
+                              #{o_html(el_for_insert)} + #{i_html(parent_node)}
+                           ")
+  end
+
+  # return innerHTML of the element
+  def i_html(selector)
+    "document.querySelector('#{selector}').innerHTML"
+  end
+
+  # return outerHTML of the element
+  def o_html(selector)
+    "document.querySelector('#{selector}').outerHTML"
+  end
+
+  def change_attr(atr, sel, str)
+    @browser.execute_script("document.querySelector('#{sel}')
+                                     .setAttribute(\"#{atr}\",\"#{str}\")")
   end
 
   def parse_filename(str)
