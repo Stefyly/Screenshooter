@@ -24,9 +24,7 @@ class Screenshooter
     @folder_manager.block_paths.each do |component_name, path|
       @browser.goto('file://' + path)
       @widths.each do |width|
-        @browser.window.resize_to(width, 0) # HACK: for firefox screenshoots
-        @browser.window.resize_to(width, get_page_height(@browser) + @vertical_offset)
-        @browser.driver.save_screenshot(@folder_manager.pict_name(component_name, width))
+        make_screenshot(width, @folder_manager.pict_name(component_name, width))
         progressbar.increment!
       end
     end
@@ -41,9 +39,7 @@ class Screenshooter
       @executor.state_count.times do |i|
         @executor.next_command
         @widths.each do |width|
-          @browser.window.resize_to(width, 0) # HACK: for firefox screenshoots
-          @browser.window.resize_to(width, get_page_height(@browser) + @vertical_offset)
-          @browser.driver.save_screenshot(@folder_manager.pict_name(component_name, i, width))
+          make_screenshot(width, @folder_manager.pict_name(component_name, i, width))
         end
       end
       progressbar.increment!
@@ -60,15 +56,20 @@ class Screenshooter
       @executor = Executor.new(@browser)
       @executor.commands_from_file(cmp[0])
       @browser.goto('file://' + cmp[1])
-      @executor.state_count.times do |b|
+      @executor.state_count.times do |i|
         @executor.next_command
         @widths.each do |width|
-          @browser.window.resize_to(width, 0) # HACK: for firefox screenshoots
-          @browser.window.resize_to(width, get_page_height(@browser) + @vertical_offset)
-          @browser.driver.save_screenshot(@folder_manager.pict_name(cmp[0], b, width))
+          make_screenshot(width, @folder_manager.pict_name(cmp[0], i, width))
         end
       end
     end
   end
+
+  def make_screenshot(width ,pict_name)
+    @browser.window.resize_to(width, 0) # HACK: for firefox screenshoots
+    @browser.window.resize_to(width, get_page_height(@browser) + @vertical_offset)
+    @browser.driver.save_screenshot(pict_name)
+  end
+  
   private :browser_configure
 end
