@@ -5,6 +5,7 @@ class StateFolderTree < FolderTree
     @current_folder = './screenshots/states'
     @blocks = block_paths
   end
+
   # generate list of folder and subfolder names form ./states in format folder/subfolder
   # input  -> header_1.yml
   # output -> d-1/header
@@ -16,7 +17,7 @@ class StateFolderTree < FolderTree
               end
     folders.map do |name|
       block_version = /[0-9]/.match(name).to_s
-      block_category = /[a-z]+[^_.yml]/.match(name).to_s
+      block_category = name.split('_')[0]
       folders = ['d-' + block_version, block_category].join('/')
     end
   end
