@@ -1,0 +1,10 @@
+states: [
+  [refresh],
+  [click, '.item__icon'],
+  [remove, '.subtitle'],
+  [
+    [refresh],
+    [remove, '.button']
+  ]
+]
+total: 4
