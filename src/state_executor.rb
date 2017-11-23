@@ -62,6 +62,8 @@ class Executor
       add_el_to_begin(cmd[1], cmd[2])
     when 'swap_el'
       swap_el(cmd[1], cmd[2])
+    when 'click'
+      click_el(cmd[1])
     end
   end
 
@@ -86,6 +88,10 @@ class Executor
   def refresh_page
     # p 'refresh page'
     @browser.refresh
+  end
+
+  def click_el(selector)
+    @browser.element(css: selector).click
   end
 
   # Dirty implementation of the element replacing method

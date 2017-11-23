@@ -1,0 +1,17 @@
+states: [
+  [refresh],
+  [el_to_link, '.button'],
+  [
+    [refresh],
+    [remove, '.item__title'],
+    [remove, '.item__title'],
+    [remove, '.item__title']
+  ],
+  [
+    [refresh],
+    [remove, '.item__text'],
+    [remove, '.item__text'],
+    [remove, '.item__text']
+  ]
+]
+total: 4
