@@ -1,0 +1,15 @@
+states: [
+  [refresh],
+  [click, '.item__image'],
+  [
+    [click, '.fancybox-button--close'],
+    [remove, '.subtitle']
+  ],
+  [
+    [refresh],
+    [remove, 6, 'figcaption']
+  ],
+  [remove, '.subtitle'],
+  [el_to_link, 'button']
+]
+total: 6

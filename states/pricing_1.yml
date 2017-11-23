@@ -1,0 +1,32 @@
+states: [
+  [refresh],
+  [remove, 3, '.button--primary'],
+  [
+    [refresh],
+    [remove, 3, '.plan__icon-wrapper']
+  ],
+  [
+    [refresh],
+    [copy, 5, 'article:nth-child(1) li', 'article:nth-child(1) ul'],
+    [copy, 5, 'article:nth-child(2) li', 'article:nth-child(2) ul'],
+    [copy, 5, 'article:nth-child(3) li', 'article:nth-child(3) ul']
+  ],
+  [
+    [refresh],
+    [remove, 3, '.plan__price-count'],
+    [remove, 3, '.plan__price-text']
+  ],
+  [
+    [remove, 3, '.button--primary'],
+    [remove, 3, 'ul']
+  ],
+  [
+    [refresh],
+    [remove, '.subtitle']
+  ],
+  [
+    [refresh],
+    [el_to_link, '.button--secondary']
+  ]
+]
+total: 8
