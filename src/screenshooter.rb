@@ -1,12 +1,12 @@
 class Screenshooter
+  attr_writer :folder_manager, :executor
   def initialize(browser)
     @browser = browser
-
     # HACK: for firefox screenshoots
     browser_configure
     @widths = CONFIG['widths']
   end
-    attr_writer :folder_manager, :executor
+  private :browser_configure
 
   def browser_configure
     if @browser.driver.is_a?(Selenium::WebDriver::Firefox::Marionette::Driver)
@@ -19,14 +19,14 @@ class Screenshooter
   end
 
   def screenshot_full
-    progressbar = ProgressBar.new(@folder_manager.block_paths.length * @widths.length)
     @folder_manager.init_folder_tree
-      @folder_manager.block_paths.each do |component_name, path|
-        @browser.goto('file://' + path)
-        @widths.each do |width|
-          @browser.window.resize_to(width, 0) # HACK: for firefox screenshoots  
-          @browser.window.resize_to(width, get_page_height(@browser) + @vertical_offset)
-          @browser.driver.save_screenshot(@folder_manager.pict_name(component_name, width))
+    progressbar = ProgressBar.new(@folder_manager.block_paths.length * @widths.length)
+    @folder_manager.block_paths.each do |component_name, path|
+      @browser.goto('file://' + path)
+      @widths.each do |width|
+        @browser.window.resize_to(width, 0) # HACK: for firefox screenshoots
+        @browser.window.resize_to(width, get_page_height(@browser) + @vertical_offset)
+        @browser.driver.save_screenshot(@folder_manager.pict_name(component_name, width))
         progressbar.increment!
       end
     end
@@ -50,5 +50,24 @@ class Screenshooter
     end
   end
 
-  private :browser_configure
+  def screenshot_parallel(n = 2)
+    @folder_manager.init_folder_tree
+    pb = ProgressBar.new(@folder_manager.block_paths.length)
+    arr = @folder_manager.block_paths.to_a
+    pb_incr = ->(_item, _i, _result) { pb.increment! }
+    Parallel.map(arr, finish: pb_incr, in_processes: n) do |cmp|
+      @browser = browser_factory('chrome')
+      @executor = Executor.new(@browser)
+      @executor.commands_from_file(cmp[0])
+      @browser.goto('file://' + cmp[1])
+      @executor.state_count.times do |b|
+        @executor.next_command
+        @widths.each do |width|
+          @browser.window.resize_to(width, 0) # HACK: for firefox screenshoots
+          @browser.window.resize_to(width, get_page_height(@browser) + @vertical_offset)
+          @browser.driver.save_screenshot(@folder_manager.pict_name(cmp[0], b, width))
+        end
+      end
+    end
+  end
 end
