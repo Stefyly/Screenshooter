@@ -1,12 +1,12 @@
 class Screenshooter
   attr_writer :folder_manager, :executor
+
   def initialize(browser)
     @browser = browser
     # HACK: for firefox screenshoots
     browser_configure
     @widths = CONFIG['widths']
   end
-  private :browser_configure
 
   def browser_configure
     if @browser.driver.is_a?(Selenium::WebDriver::Firefox::Marionette::Driver)
@@ -55,7 +55,7 @@ class Screenshooter
     pb = ProgressBar.new(@folder_manager.block_paths.length)
     arr = @folder_manager.block_paths.to_a
     pb_incr = ->(_item, _i, _result) { pb.increment! }
-    Parallel.map(arr, finish: pb_incr, in_processes: n) do |cmp|
+    Parallel.map(arr, finish: pb_incr, in_processes: n.to_i) do |cmp|
       @browser = browser_factory('chrome')
       @executor = Executor.new(@browser)
       @executor.commands_from_file(cmp[0])
@@ -70,4 +70,5 @@ class Screenshooter
       end
     end
   end
+  private :browser_configure
 end
