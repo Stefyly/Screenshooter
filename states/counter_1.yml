@@ -1,6 +1,6 @@
 states: [
   [refresh],
-  [remove,.counter__item],
+  [remove, .counter__item],
   [remove, .counter__item],
   [remove, .counter__item],
   [refresh],
