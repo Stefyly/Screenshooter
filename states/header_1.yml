@@ -7,7 +7,7 @@ states: [
     [remove, .logo__title],
     [
       [refresh],
-      [replace_text, .header__button, 'Get your flat free estimation']
+      [replace_text,  .header__button, 'Get your flat free estimation']
     ],
     [replace_text, .header__button, '321321321456 78903213213213 78903213213213 2132145325342 543543543'],
     [

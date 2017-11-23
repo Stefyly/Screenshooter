@@ -6,6 +6,6 @@ states: [
   [refresh],
   [remove, .subtitle],
   [refresh],
-  [remove, .form]
+  [remove,  .form]
 ]
 total: 8

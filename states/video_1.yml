@@ -14,7 +14,7 @@ states: [
       [remove, .article__text]
     ],
     [
-      [remove, .button--primary],
+      [remove,  .button--primary],
       [remove, .link]
     ],
     [remove, .article__title],
