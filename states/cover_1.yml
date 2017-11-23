@@ -1,0 +1,18 @@
+states: [
+  [refresh],
+  [add_style, '.section__inner', 'text-align:center'],
+  [add_style, '.section__inner', 'text-align:right'],
+  [
+    [refresh],
+    [remove, '.button--secondary']
+  ],
+  [add_style, '.section__inner', 'text-align:center'],
+  [add_style, '.section__inner', 'text-align:right'],
+  [
+    [refresh],
+    [el_to_link, '.button--secondary']
+  ],
+ [add_style, '.section__inner', 'text-align:center'],
+ [add_style, '.section__inner', 'text-align:right']
+]
+total: 9
