@@ -23,18 +23,21 @@ class Executor
     @state_count = obj['total']
     @current_state = 0
     @block_name = block_name
+  rescue Psych::SyntaxError => e
+    STDERR.puts "\t Can't parse config file for ".red + block_name.cyan
+    STDERR.puts "\t Check conflict line in error message".red
+    STDERR.puts e
   end
 
   # @params commands [String] - contain command and params for this command
   #         command[0] - command name
   #         command[1..n] - command params
   def execute_comand(commands)
-    send(cmd[0], commands)
+    send(commands[0], commands)
   rescue StandardError => e
-    STDERR.puts "\e[31mERROR On block #{@block_name}
+    STDERR.puts "On block #{@block_name}
                              On state #{@current_state}
-                             On call #{commands} \e[0m
-                             "
+                             On call #{commands}".red
     STDERR.puts e
   end
 

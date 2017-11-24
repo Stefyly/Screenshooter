@@ -70,6 +70,6 @@ class Screenshooter
     @browser.window.resize_to(width, get_page_height(@browser) + @vertical_offset)
     @browser.driver.save_screenshot(pict_name)
   end
-  
+
   private :browser_configure
 end
