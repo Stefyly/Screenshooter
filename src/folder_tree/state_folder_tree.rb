@@ -1,6 +1,6 @@
 class StateFolderTree < FolderTree
 
-  # Set file - if u need to run statas only for 1 block
+  # Set filename in format [name_[0-9] - if u need to run states only for 1 block
   def initialize(file = nil)
     FileUtils.mkpath('./screenshots/states') unless File.directory?('./screenshots/states')
     @file = file

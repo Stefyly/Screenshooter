@@ -5,133 +5,157 @@ class Executor
     @state_count = 0
   end
   attr_reader :state_count
-  def set_comands(comands)
-    @comands = comands
-  end
 
   def next_command
-    if @comands[@current_state].first.is_a?(Array)
-      @comands[@current_state].each do |current_comand|
+    if @commands[@current_state].first.is_a?(Array)
+      @commands[@current_state].each do |current_comand|
         execute_comand(current_comand)
       end
     else
-      execute_comand(@comands[@current_state])
+      execute_comand(@commands[@current_state])
     end
     @current_state += 1
   end
 
-  def commands_from_file(component_name)
-    obj = YAML.safe_load(File.read(File.join(File.dirname(__FILE__), '../states/' + parse_filename(component_name))))
-    @comands = obj['states']
+  def commands_from_file(block_name)
+    obj = YAML.safe_load(File.read(File.join(File.dirname(__FILE__), '../states/' + parse_filename(block_name))))
+    @commands = obj['states']
     @state_count = obj['total']
     @current_state = 0
-    @component_name = component_name
+    @block_name = block_name
+  rescue Psych::SyntaxError => e
+    STDERR.puts "\t Can't parse config file for ".red + block_name.cyan
+    STDERR.puts "\t Check conflict line in error message".red
+    STDERR.puts e
   end
 
-  # NEED REFACTOR
-  def execute_comand(cmd)
-    case cmd[0]
-    when 'replace_text'
-      replace_text(cmd[1], cmd[2])
-    when 'remove'
-      if cmd.size == 3
-        cmd[1].times do
-          remove_element(cmd[2])
-        end
-      else
-        remove_element(cmd[1])
-      end
-    when 'copy'
-      if cmd.size == 4
-        cmd[1].times do
-          copy_element(cmd[2], cmd[3])
-        end
-      else
-        copy_element(cmd[1], cmd[2])
-      end
-    when 'el_to_link'
-      el_to_link(cmd[1])
-    when 'refresh'
-      refresh_page
-    when 'add_style'
-      add_style(cmd[1], cmd[2])
-    when 'replace_class'
-      replace_class(cmd[1], cmd[2])
-    when 'add_class'
-      replace_class(cmd[1], cmd[2])
-    when 'add_el_to_begin'
-      add_el_to_begin(cmd[1], cmd[2])
-    when 'swap_el'
-      swap_el(cmd[1], cmd[2])
-    when 'click'
-      click_el(cmd[1])
-    end
+  # @params commands [String] - contain command and params for this command
+  #         command[0] - command name
+  #         command[1..n] - command params
+  def execute_comand(commands)
+    send(commands[0], commands)
   rescue StandardError => e
-    puts "\e[31mERROR On component #{@component_name} 
-                 On state #{@current_state}
-                 On call #{cmd} \e[0m
-                 "
-    puts e
+    STDERR.puts "On block #{@block_name}
+                             On state #{@current_state}
+                             On call #{commands}".red
+    STDERR.puts e
   end
 
-  def replace_text(selector, text)
-    # p 'set_text selector:' + selector + 'text' + text
-    @browser.execute_script("#{i_html(selector)} = '#{text}'")
+  # replace innerHtml of the element
+  # @params cmd[String]
+  #   cmd[1] - element selector
+  #   cmd[2] - new text
+  def replace_text(cmd)
+    @browser.execute_script("#{i_html(cmd[1])} = '#{cmd[2]}'")
   end
 
   def replace_texts(selector, text)
     # @browser.execute_script("document.querySelectorAll('#{selector}').forEach(item => { item.innerHTML = '#{text}'})")
   end
 
-  def remove_element(selector)
-    # p 'remove ' + selector
-    @browser.execute_script("document.querySelector('#{selector}').remove()")
+  # remove element from DOM
+  # @params cmd[String] with length 2 or 3
+  # for length 2
+  #   cmd[1] - element css selector
+  # for length 3
+  #   cmd[1] - number of times that command should be performed
+  #   cmd[2] - element selector
+  def remove(cmd)
+    if cmd.length == 3
+      cmd[1].times do
+        @browser.execute_script("document.querySelector('#{cmd[2]}').remove()")
+      end
+    else
+      @browser.execute_script("document.querySelector('#{cmd[1]}').remove()")
+    end
   end
 
-  def copy_element(el_to_copy, paste_inside)
-    @browser.execute_script("#{i_html(paste_inside)} += #{o_html(el_to_copy)}")
+  # copy element and paste to the end of container element
+  # @params cmd[String] with length 3 or 4
+  # for length 3
+  #   cmd[1] - element css selector
+  #   cmd[2] - container css selector
+  # for length 4
+  #   cmd[1] - number of times that command should be performed
+  #   cmd[2] - element css selector
+  #   cmd[3] - container css selector
+  def copy(cmd)
+    if cmd.size == 4
+      cmd[1].times do
+        @browser.execute_script("#{i_html(cmd[2])} += #{o_html(cmd[3])}")
+      end
+    else
+      @browser.execute_script("#{i_html(cmd[1])} += #{o_html(cmd[2])}")
+    end
   end
 
-  def refresh_page
+  # refresh browser page
+  def refresh(*)
     # p 'refresh page'
     @browser.refresh
   end
 
-  def click_el(selector)
-    @browser.element(css: selector).click
+  # simulate click on element
+  # @params cmd[String]
+  #   cmd[1] - element css selector
+  def click(cmd)
+    @browser.element(css: cmd[1]).click
   end
 
   # Dirty implementation of the element replacing method
-  def el_to_link(selector)
+  # Repalace element using css selector to link
+  # @params cmd[String]
+  #   cmd[1] - element css selector
+  def el_to_link(cmd)
     link = '<a style = \"text-decoration: underline\" class=\"link\"> Link instead of button </a>'
-    @browser.execute_script("#{o_html(selector)} = '#{link}' ")
+    @browser.execute_script("#{o_html(cmd[1])} = '#{link}' ")
   end
 
-  def add_style(selector, style)
-    change_attr(:style, selector, style)
+  # add inline style for element
+  # @params cmd[String]
+  #   cmd[1] - element css selector
+  #   cmd[2] - css rules
+  def add_style(cmd)
+    change_attr(:style, cmd[1], cmd[2])
   end
 
-  def replace_class(selector, klass)
-    change_attr(:class, selector, klass)
+  # replace existed elements class
+  # @params cmd[String]
+  #   cmd[1] - element css selector
+  #   cmd[2] - new classes
+  def replace_class(cmd)
+    change_attr(:class, cmd[1], cmd[2])
   end
 
-  def add_class(selector, klass)
-    str = [@browser.element(css: selector).attribute_value('class'), klass].join(' ')
-    change_attr(:class, selector, str)
+  # add new class for  existed elements classes
+  # @params cmd[String]
+  #   cmd[1] - element css selector
+  #   cmd[2] - additional class
+  def add_class(cmd)
+    str = [@browser.element(css: cmd[1]).attribute_value('class'), cmd[2]].join(' ')
+    change_attr(:class, cmd[1], str)
   end
 
-  def add_el_to_begin(el_for_insert, parent_node)
-    @browser.execute_script(" #{i_html(parent_node)} =
-                              #{o_html(el_for_insert)} + #{i_html(parent_node)}
+  # copy element to begin of the container
+  # @params cmd[String]
+  #   cmd[1] - element css selector
+  #   cmd[2] - container selector
+  def add_el_to_begin(cmd)
+    @browser.execute_script(" #{i_html(cmd[1])} =
+                              #{o_html(cmd[2])} + #{i_html(cmd[1])}
                            ")
   end
 
   # swap 2 elements in DOM
-  def swap_el(first, second)
+  # elements should be in the same container
+  # @params cmd[String]
+  #   cmd[1] - first element selector
+  #   cmd[2] - seconde element selector
+  def swap_el(cmd)
     @browser.execute_script("
-      p = document.querySelector('#{first}').parentNode;
-      f = document.querySelector('#{first}');
-      s = document.querySelector('#{second}');
+      p = document.querySelector('#{cmd[1]}').parentNode;
+      f = document.querySelector('#{cmd[1]}');
+      s = document.querySelector('#{cmd[2]}');
       p.insertBefore(s, f);
     ")
   end
