@@ -25,9 +25,10 @@ class Executor
     @comands = obj['states']
     @state_count = obj['total']
     @current_state = 0
+    @component_name = component_name
   end
 
-# NEED REFACTOR
+  # NEED REFACTOR
   def execute_comand(cmd)
     case cmd[0]
     when 'replace_text'
@@ -65,6 +66,12 @@ class Executor
     when 'click'
       click_el(cmd[1])
     end
+  rescue StandardError => e
+    puts "\e[31mERROR On component #{@component_name} 
+                 On state #{@current_state}
+                 On call #{cmd} \e[0m
+                 "
+    puts e
   end
 
   def replace_text(selector, text)
