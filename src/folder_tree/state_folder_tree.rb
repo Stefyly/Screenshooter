@@ -20,7 +20,7 @@ class StateFolderTree < FolderTree
     folders.map do |name|
       block_version = /[0-9]/.match(name).to_s
       block_category = name.split('_')[0]
-      folders = ['d-' + block_version, block_category].join('/')
+      folders = ['w-' + block_version, block_category].join('/')
     end
   end
 
