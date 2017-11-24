@@ -1,7 +1,8 @@
 class FolderTree
+  attr_accessor :blocks
+
   def initialize
     @current_folder = nil
-    @blocks = nil
   end
 
   def init_folder_tree
