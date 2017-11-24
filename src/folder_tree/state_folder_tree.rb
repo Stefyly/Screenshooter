@@ -1,5 +1,4 @@
 class StateFolderTree < FolderTree
-  attr_accessor :blocks
 
   # Set file - if u need to run statas only for 1 block
   def initialize(file = nil)
@@ -32,7 +31,6 @@ class StateFolderTree < FolderTree
   #   blocks-library/<block-category>/<block-verson>/wireframe/dist/index.html
   #   example = "header/header_1" => "PATH/header_1/wireframe/dist/index.html"
   def block_paths
-    p "call BLOCK"
     blocks = existed_states
     full_path = []
     blocks.each do |block|

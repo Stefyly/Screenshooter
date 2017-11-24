@@ -20,8 +20,8 @@ class Screenshooter
 
   def screenshot_full
     @folder_manager.init_folder_tree
-    progressbar = ProgressBar.new(@folder_manager.block_paths.length * @widths.length)
-    @folder_manager.block_paths.each do |component_name, path|
+    progressbar = ProgressBar.new(@folder_manager.blocks.length * @widths.length)
+    @folder_manager.blocks.each do |component_name, path|
       @browser.goto('file://' + path)
       @widths.each do |width|
         make_screenshot(width, @folder_manager.pict_name(component_name, width))
@@ -48,8 +48,8 @@ class Screenshooter
 
   def screenshot_parallel(n = 2)
     @folder_manager.init_folder_tree
-    pb = ProgressBar.new(@folder_manager.block_paths.length)
-    arr = @folder_manager.block_paths.to_a
+    pb = ProgressBar.new(@folder_manager.blocks.length)
+    arr = @folder_manager.blocks.to_a
     pb_incr = ->(_item, _i, _result) { pb.increment! }
     Parallel.map(arr, finish: pb_incr, in_processes: n.to_i) do |cmp|
       @browser = browser_factory('chrome')
