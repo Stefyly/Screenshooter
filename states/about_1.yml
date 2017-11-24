@@ -1,0 +1,27 @@
+states: [
+  [refresh],
+  [swap_el, 'img', '.article__content'],
+  [refresh],
+  [remove, '.article__text'],
+  [
+    [refresh],
+    [remove, '.article__subtitle']
+  ],
+  [
+    [refresh],
+    [remove, '.socials'],
+    [remove, '.article__subtitle--social']
+  ],
+  [
+    [refresh],
+    [remove, '.article__subtitle],
+    [remove, '.article__text']
+  ],
+  [
+    [remove, '.socials'],
+    [remove, '.article__subtitle--social']
+  ],
+  [remove, '.article__title'],
+  [remove, 'button']
+]
+total: 10

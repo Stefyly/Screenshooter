@@ -1,10 +1,9 @@
 states: [
     [refresh],
-    [replace_text, .header__button, 'Get a free consultation right now'],
+    [replace_text, 'button', 'Get a free consultation right now'],
     [remove,'.header__button'],
-    [copy, 5,'.nav-list__item', '.nav-list'],
-    [remove, .logo__subtitle],
-    [remove, .logo__title],
+    [copy, 4,'.nav-list__item', '.nav-list'],
+    [remove, .logo],
     [
       [refresh],
       [replace_text,  .header__button, 'Get your flat free estimation']
@@ -16,4 +15,4 @@ states: [
     ],
     [remove, .header__button]
 ]
-total: 10
+total: 9
