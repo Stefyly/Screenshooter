@@ -1,7 +1,10 @@
 class StateFolderTree < FolderTree
-  attr_accessor :single_file
-  def initialize
+  attr_accessor :blocks
+
+  # Set file - if u need to run statas only for 1 block
+  def initialize(file = nil)
     FileUtils.mkpath('./screenshots/states') unless File.directory?('./screenshots/states')
+    @file = file
     @current_folder = './screenshots/states'
     @blocks = block_paths
   end
@@ -10,10 +13,10 @@ class StateFolderTree < FolderTree
   # input  -> header_1.yml
   # output -> d-1/header
   def existed_states
-    folders = if @single_file.nil?
+    folders = if @file.nil?
                 Dir.entries('./states/').reject { |name| name[0] == '.' }
               else
-                [single_file]
+                [@file]
               end
     folders.map do |name|
       block_version = /[0-9]/.match(name).to_s
@@ -29,6 +32,7 @@ class StateFolderTree < FolderTree
   #   blocks-library/<block-category>/<block-verson>/wireframe/dist/index.html
   #   example = "header/header_1" => "PATH/header_1/wireframe/dist/index.html"
   def block_paths
+    p "call BLOCK"
     blocks = existed_states
     full_path = []
     blocks.each do |block|

@@ -10,9 +10,7 @@ task :states, [:file, :br] do |_t, args|
   browser = browser_factory(browser_name)
   scr = Screenshooter.new(browser)
   scr.executor = Executor.new(browser)
-  ff = StateFolderTree.new
-  ff.single_file = args[:file]
-  scr.folder_manager = ff
+  scr.folder_manager = StateFolderTree.new(args[:file])
   scr.screenshot_states
 end
 

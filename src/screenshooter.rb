@@ -32,8 +32,8 @@ class Screenshooter
 
   def screenshot_states
     @folder_manager.init_folder_tree
-    progressbar = ProgressBar.new(@folder_manager.block_paths.length)
-    @folder_manager.block_paths.each do |component_name, path|
+    progressbar = ProgressBar.new(@folder_manager.blocks.length)
+    @folder_manager.blocks.each do |component_name, path|
       @executor.commands_from_file(component_name)
       @browser.goto('file://' + path)
       @executor.state_count.times do |i|
