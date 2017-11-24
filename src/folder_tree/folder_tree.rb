@@ -21,6 +21,7 @@ class FolderTree
 
     [@current_folder, folder, information.join('_')].join('/') << '.png'
   end
+
   # get hash of blocks names and its full path which have configs in /states folder
   # in format
   # key - folder/subfolder
