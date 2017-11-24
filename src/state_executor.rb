@@ -82,10 +82,10 @@ class Executor
   def copy(cmd)
     if cmd.size == 4
       cmd[1].times do
-        @browser.execute_script("#{i_html(cmd[2])} += #{o_html(cmd[3])}")
+        @browser.execute_script("#{i_html(cmd[3])} += #{o_html(cmd[2])}")
       end
     else
-      @browser.execute_script("#{i_html(cmd[1])} += #{o_html(cmd[2])}")
+      @browser.execute_script("#{i_html(cmd[2])} += #{o_html(cmd[1])}")
     end
   end
 
