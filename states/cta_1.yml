@@ -1,0 +1,5 @@
+states: [
+  [refresh],
+  [remove, '.description']
+]
+total: 2

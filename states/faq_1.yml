@@ -4,7 +4,7 @@ states: [
   [remove, '.subtitle'],
   [
     [refresh],
-    [remove, '.button']
+    [el_to_link, '.button--secondary']
   ]
 ]
 total: 4
