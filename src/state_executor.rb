@@ -18,7 +18,7 @@ class Executor
   end
 
   def commands_from_file(block_name)
-    obj = YAML.safe_load(File.read(File.join(File.dirname(__FILE__), '../states/' + parse_filename(block_name))))
+    obj = YAML.safe_load(File.read(File.join(File.dirname(__FILE__), '../states/'+ block_name + '.yml')))
     @commands = obj['states']
     @state_count = obj['total']
     @current_state = 0
@@ -173,9 +173,5 @@ class Executor
   def change_attr(atr, sel, str)
     @browser.execute_script("document.querySelector('#{sel}')
                                      .setAttribute(\"#{atr}\",\"#{str}\")")
-  end
-
-  def parse_filename(str)
-    str.split('/')[1] + '_' + /[0-9]/.match(str).to_s + '.yml'
   end
 end
