@@ -12,8 +12,8 @@ class StateFolderTree < FolderTree
   # output -> d-1/header
   def existed_states
     if @file.nil?
-      folders = Dir.glob('**/*.yml')
-      folders.map { |a| a.gsub!('states/', '').gsub!('.yml', '') }
+      folders = Dir.glob('**/wireframes/**/*.yml')
+      folders.map { |a| a.gsub!('states/wireframes/', '').gsub!('.yml', '') }
     else
       [@file]
     end
