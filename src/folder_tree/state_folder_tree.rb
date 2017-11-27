@@ -1,5 +1,4 @@
 class StateFolderTree < FolderTree
-
   # Set filename in format [name_[0-9] - if u need to run states only for 1 block
   def initialize(file = nil)
     FileUtils.mkpath('./screenshots/states') unless File.directory?('./screenshots/states')
@@ -12,15 +11,11 @@ class StateFolderTree < FolderTree
   # input  -> header_1.yml
   # output -> d-1/header
   def existed_states
-    folders = if @file.nil?
-                Dir.entries('./states/').reject { |name| name[0] == '.' }
-              else
-                [@file]
-              end
-    folders.map do |name|
-      block_version = /[0-9]/.match(name).to_s
-      block_category = name.split('_')[0]
-      folders = ['w-' + block_version, block_category].join('/')
+    if @file.nil?
+      folders = Dir.glob('**/wireframes/**/*.yml')
+      folders.map { |a| a.gsub!('states/wireframes/', '').gsub!('.yml', '') }
+    else
+      [@file]
     end
   end
 
