@@ -1,0 +1,43 @@
+states: [
+  [refresh],
+  [el_to_link, 'button'],
+  [remove, 3, '.link'],
+  [
+    [refresh],
+    [remove, '.item']
+  ],
+  [
+    [refresh],
+    [copy, '.item', '.items-wrapper']
+  ],
+  [copy, '.item', '.items-wrapper'],
+  [
+    [refresh],
+    [remove, '.subtitle']
+  ],
+  [
+    [refresh],
+    [remove, 3, '.item__desc'],
+    [remove, 3, '.link']
+  ],
+  [
+    [refresh],
+    [remove, 3, '.item__email']
+  ],
+  [remove, 3, '.link'],
+  [remove, 3, '.item__desc'],
+  [
+    [refresh],
+    [remove, 3, '.link'],
+    [remove, 3, '.socials']
+  ],
+  [remove, 3, '.item__email'],
+  [
+    [refresh],
+    [remove, 3, '.item__email'],
+    [remove, 3, '.item__desc']
+  ],
+  [remove, 3, '.socials'],
+  [remove, 3, '.link'],
+]
+total: 16

@@ -1,6 +1,6 @@
 states: [
   [refresh],
-  [swap_el, 'img', '.article__content'],
+  [swap_el, '.article__picture', '.article__content'],
   [refresh],
   [remove, '.article__text'],
   [
@@ -10,16 +10,16 @@ states: [
   [
     [refresh],
     [remove, '.socials'],
-    [remove, '.article__subtitle--social']
+    [remove, '.article__subtitle--socials']
   ],
   [
     [refresh],
-    [remove, '.article__subtitle],
+    [remove, '.article__subtitle'],
     [remove, '.article__text']
   ],
   [
     [remove, '.socials'],
-    [remove, '.article__subtitle--social']
+    [remove, '.article__subtitle--socials']
   ],
   [remove, '.article__title'],
   [remove, 'button']

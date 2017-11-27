@@ -1,0 +1,28 @@
+states: [
+  [refresh],
+  [
+    [remove, '.article:nth-child(4)'],
+    [swap_el, '.article:nth-child(3)', '.article:nth-child(2)']
+  ],
+  [
+    [refresh],
+    [el_to_link, 'button']
+  ],
+  [refresh],
+  [copy, 'button', '.btns-group'],
+  [
+    [refresh],
+    [remove, 3, '.article__caption']
+  ],
+  [
+    [refresh],
+    [remove, 3, '.article__text']
+  ],
+  [remove, 3, '.article__link'],
+  [remove, 3, '.article__caption'],
+  [
+    [refresh],
+    [remove, '.subtitle']
+  ]
+]
+total: 10
