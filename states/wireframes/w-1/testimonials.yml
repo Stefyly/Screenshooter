@@ -1,0 +1,38 @@
+states: [
+  [refresh],
+  [remove, 2, '.item__time'],
+  [
+    [refresh],
+    [remove, '.subtitle']
+  ],
+  [remove, 2, '.item__time'],
+  [
+    [refresh],
+    [remove, 2, '.item__desc']
+  ],
+  [
+    [refresh],
+    [remove, 2, '.item__position']
+  ],
+  [
+    [refresh],
+    [remove, 2, '.rating']
+  ],
+  [remove, 2, '.item__position'],
+  [
+    [refresh],
+    [remove, 2, '.item__pic']
+  ],
+  [
+    [remove, 2, '.item__position'],
+    [remove, 2, '.rating']
+  ],
+  [remove, '.subtitle'],
+  [remove, 2, '.item__time'],
+  [
+    [refresh],
+    [el_to_link, '.button--secondary']
+  ],
+  [remove, 2, '.socials-list']
+]
+total: 13

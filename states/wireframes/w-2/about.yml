@@ -1,0 +1,41 @@
+states: [
+  [refresh],
+  [add_style, '', 'background-position:center'],
+  [
+    [refresh],
+    [el_to_link, '']
+  ],
+  [add_style, '', 'background-position:center'],
+  [
+    [refresh],
+    [remove, '']
+  ],
+  [add_style, '', 'background-position:center'],
+  [  
+    [refresh],
+    [remove, '']
+    [el_to_link, '']
+  ],
+  [add_style, '', 'background-position:center'],
+  [
+    [refresh],
+    [remove, '']
+  ],
+  [
+    [refresh],
+    [remove, '']
+  ],
+  [
+    [refresh],
+    [remove, '']
+  ],
+  [
+    [refresh],
+    [remove, '']
+  ],
+  [
+    [refresh],
+    [remove, '']
+  ]
+]
+total: 13

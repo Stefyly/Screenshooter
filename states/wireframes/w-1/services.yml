@@ -1,0 +1,21 @@
+states: [
+  [refresh],
+  [el_to_link, 'button'],
+  [add_el_to_begin, '.article', '.articles-wrapper'],
+  [remove, 5, '.article__text'],
+  [
+    [refresh],
+    [remove, 4, '.article__title']
+  ],
+  [
+    [refresh],
+    [remove, '.article']
+  ],
+  [remove, '.article'],
+  [remove, '.article'],
+  [
+    [refresh],
+    [remove, '.subtitle']
+  ]
+]
+total: 9

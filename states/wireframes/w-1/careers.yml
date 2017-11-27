@@ -1,0 +1,25 @@
+states: [
+  [refresh],
+  [copy, '.list__item', '.list'],
+  [
+    [refresh],
+    [remove, '.media']
+  ],
+  [
+    [refresh],
+    [remove, '.subtitle']
+  ],
+  [
+    [refresh],
+    [remove, '.content__text']
+  ],
+  [
+    [refresh],
+    [remove, 3, '.list__item-icon']
+  ],
+  [
+    [refresh],
+    [el_to_link, '.button--primary']
+  ]
+]
+total: 7

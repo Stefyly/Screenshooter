@@ -1,0 +1,19 @@
+states: [
+  [refresh],
+  [el_to_link, 'button'],
+  [remove, ''],
+  [
+    [refresh],
+    [copy, ]
+  ],
+  [
+    [refresh],
+    [remove, '']
+  ],
+  [
+    [refresh],
+    [remove, '']
+  ],
+  [el_to_link, 'button'],
+]
+total: 7

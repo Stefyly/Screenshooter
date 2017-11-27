@@ -1,0 +1,22 @@
+states: [
+  [refresh],
+  [el_to_link, 'button'],
+  [remove, '.subtitle'],
+  [remove, 3, '.item__picture'],
+  [
+    [refresh],
+    [remove, 3, '.item__title']
+  ],
+  [
+    [refresh],
+    [remove, 3, '.link']
+  ],
+  [
+    [refresh],
+    [remove, 3, '.item__text']
+  ],
+  [remove, 3, '.link'],
+  [remove, 3, '.item__text'],
+  [remove, 3, '.item__title']
+]
+total: 8

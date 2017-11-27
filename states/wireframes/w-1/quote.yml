@@ -1,0 +1,9 @@
+states: [
+  [refresh],
+  [remove, ''],
+  [
+    [refresh],
+    [remove, '']
+  ]
+]
+total: 3

@@ -141,8 +141,8 @@ class Executor
   #   cmd[1] - element css selector
   #   cmd[2] - container selector
   def add_el_to_begin(cmd)
-    @browser.execute_script(" #{i_html(cmd[1])} =
-                              #{o_html(cmd[2])} + #{i_html(cmd[1])}
+    @browser.execute_script(" #{i_html(cmd[2])} =
+                              #{o_html(cmd[1])} + #{i_html(cmd[2])}
                            ")
   end
 

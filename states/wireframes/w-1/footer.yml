@@ -1,0 +1,14 @@
+states: [
+  [refresh],
+  [remove, '.logo__subtitle'],
+  [
+    [refresh],
+    [copy, 4,'.nav-list__item', '.nav-list']
+  ],
+  [remove, .logo],
+  [
+    [refresh],
+    [copy, 6,'.nav-list__item', '.nav-list']
+  ]
+]
+total: 5

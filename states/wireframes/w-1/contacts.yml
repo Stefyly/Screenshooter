@@ -1,0 +1,29 @@
+states: [
+  [refresh],
+  [remove, '.contacts-list__item'],
+  [remove, '.socials'],
+  [
+    [refresh],
+    [remove, '.map']
+  ],
+  [remove, '.socials'],
+  [
+    [refresh],
+    [remove, '.map'],
+    [remove, '.logo']
+  ],
+  [remove, '.contacts-list__item'],
+  [remove, '.socials'],
+  [
+    [refresh],
+    [remove, '.map'],
+    [remove, '.logo'],
+    [remove, 2, '.contacts-list__item'],
+  ],
+  [
+    [refresh],
+    [remove, '.logo'],
+    [remove, 3, '.contacts-list__item']
+  ]
+]
+total: 10

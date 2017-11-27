@@ -1,0 +1,30 @@
+states: [
+  [refresh],
+  [el_to_link, '.button--secondary'],
+  [
+    [refresh],
+    [remove, '.button--primary']
+  ],
+  [
+    [refresh],
+    [remove, '.button--primary'],
+    [el_to_link, '.button--secondary']
+  ],
+  [
+    [refresh],
+    [copy, '.item', '.items-wrapper']
+  ],
+  [
+    [refresh],
+    [remove, '.item']
+  ],
+  [
+    [refresh],
+    [copy, 2, '.item', '.items-wrapper']
+  ],
+  [
+    [refresh],
+    [copy, 4, '.item', '.items-wrapper']
+  ]
+]
+total: 8
