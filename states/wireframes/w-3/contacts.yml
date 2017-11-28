@@ -1,0 +1,18 @@
+sattes: [
+  [refresh],
+  [el_to link, ''],
+  [remove, ''],
+  [
+    [refresh],
+    [remove, '']
+  ],
+  [
+    [refresh],
+    [remove, ''],
+    [remove, '']
+  ],
+    [refresh],
+    [remove, '']
+  ]
+]
+total: 6

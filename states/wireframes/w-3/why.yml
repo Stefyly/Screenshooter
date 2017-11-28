@@ -1,0 +1,17 @@
+states: [
+  [refresh],
+  [hover, ''],
+  [el_to_link, ''],
+  [remove, ''],
+  [hover, ''],
+  [
+    [refresh],
+    [copy, '', '']
+  ],
+  [hover, ''],
+  [copy, '', ''],
+  [hover, ''],
+  [copy, 2, ''],
+  [hover, '']
+]
+total: 11

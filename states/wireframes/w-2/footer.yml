@@ -1,0 +1,16 @@
+states: [
+  [refresh],
+  [add_el_to_begin, '.nav-list', '.footer__part--center'],
+  [
+    [remove, 3, '.footer__part--center ul:nth-child(1) li'],
+    [remove, 3, '.footer__part--center ul:nth-child(2) li'],
+    [remove, 3, '.footer__part--center ul:nth-child(3) li'],
+    [remove, 3, '.footer__part--center ul:nth-child(4) li']
+  ],
+  [
+    [refresh],
+    [remove, '.logo']
+  ],
+  [remove, '.footer__text']
+]
+total: 5

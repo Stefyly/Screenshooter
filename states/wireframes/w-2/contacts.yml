@@ -1,3 +1,31 @@
 sattes: [
-  
+  [refresh],
+  [el_to link, ''],
+  [remove, ''],
+  [remove, ''],
+  [
+    [refresh],
+    [copy, '', '']
+  ],
+  [copy, '', ''],
+  [copy, 2, '', ''],
+  [
+    [refresh],
+    [remove, 3, ''],
+    [remove, 3, '']
+  ],
+  [
+    [refresh],
+    [remove, 3, '']
+  ],
+  [
+    [refresh],
+    [remove, 3, ''],
+    [remove, 3, '']
+  ],
+  [
+    [refresh],
+    [remove, '']
+  ]
 ]
+total: 11

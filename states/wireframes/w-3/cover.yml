@@ -1,0 +1,13 @@
+states: [
+  [refresh],
+  [swap_el, '', ''],
+  [remove, ''],
+  [remove, ''],
+  [remove, ''],
+  [
+    [refresh],
+    [remove, '']
+  ],
+  [remove, '']
+]
+total: 7

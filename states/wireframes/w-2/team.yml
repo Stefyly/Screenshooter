@@ -1,0 +1,31 @@
+states: [
+  [refresh],
+  [el_to_link, ''],
+  [add_el_to_begin, '', ''],
+  [
+    [refresh],
+    [replace_text, '', '']
+  ],
+  [remove, ''],
+  [remove, ''],
+  [
+    [refresh],
+    [remove, ''],
+    [remove, '']
+  ],
+  [
+    [refresh],
+    [remove, '']
+  ],
+  [
+    [refresh],
+    [remove, ''],
+    [remove, '']
+  ],
+  [
+    [refresh],
+    [remove, '']
+  ],
+  [remove, '']
+]
+total: 11

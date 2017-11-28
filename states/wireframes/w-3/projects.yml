@@ -1,0 +1,30 @@
+states: [
+  [refresh],
+  [remove, ''],
+  [
+    [remove, ''],
+    [remove, '']
+  ],
+  [
+    [refresh],
+    [remove],
+    [copy, '', '']
+  ],
+  [copy, '', ''],
+  [copy, '', ''],
+  [
+    [refresh],
+    [remove, '']
+    [remove, 4, '']
+  ],
+  [
+    [refresh],
+    [copy],
+    [remove, '']
+  ],
+  [
+    [refresh],
+    [el_to_link, '']
+  ]
+]
+total: 9

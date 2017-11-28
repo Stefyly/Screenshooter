@@ -1,0 +1,10 @@
+states: [
+  [refresh],
+  [copy, 3, '', ''],
+  [copy, 3, '', ''],
+  [
+    [refresh],
+    [remove, '']
+  ]
+]
+total: 4

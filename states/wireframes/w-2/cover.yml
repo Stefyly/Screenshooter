@@ -1,0 +1,6 @@
+states: [
+  [refresh],
+  [click, ''],
+  [click, '']
+]
+total: 3

@@ -18,7 +18,7 @@ class Executor
   end
 
   def commands_from_file(block_name)
-    obj = YAML.safe_load(File.read(File.join(File.dirname(__FILE__), '../states/'+ block_name + '.yml')))
+    obj = YAML.safe_load(File.read(File.join(File.dirname(__FILE__), '../states/wireframes/'+ block_name + '.yml')))
     @commands = obj['states']
     @state_count = obj['total']
     @current_state = 0
@@ -100,6 +100,13 @@ class Executor
   #   cmd[1] - element css selector
   def click(cmd)
     @browser.element(css: cmd[1]).click
+  end
+
+  # simulate hover on element
+  # @params cmd[String]
+  #   cmd[1] - element css selector
+  def hover(cmd)
+    @browser.element(css: cmd[1]).hover
   end
 
   # Dirty implementation of the element replacing method

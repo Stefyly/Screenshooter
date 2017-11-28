@@ -1,0 +1,16 @@
+states: [
+  [refresh],
+  [el_to_link, ''],
+  [remove, ''],
+  [remove, ''],
+  [remove, 2, ''],
+  [
+    [refresh],
+    [remove, '']
+  ],
+  [
+    [refresh],
+    [remove, 6, '']
+  ]
+]
+total: 7
