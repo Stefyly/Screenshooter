@@ -4,7 +4,7 @@ class StateFolderTree < FolderTree
     FileUtils.mkpath('./screenshots/states') unless File.directory?('./screenshots/states')
     @args = args
     @current_folder = './screenshots/states'
-    #@blocks = block_paths
+    @blocks = block_paths
   end
 
   # generate list of folder and subfolder names form ./states in format folder/subfolder
@@ -12,33 +12,21 @@ class StateFolderTree < FolderTree
   # output -> d-1/header
 
   def existed_states
-    mode = if @args.mode.nil?
-             'wireframes'
-           else
-             @args.mode
-           end
-
-      if @args.folder.nil? && @args.file.nil?
-        folders = Dir.glob("**/#{mode}/**/*.yml")
-        p folders        
-        folders.map { |a| a.gsub!("states/#{mode}/", '').gsub!('.yml', '') }
-        p 'run full'
-        folders       
-      elsif !@args.folder.nil?
-        p 'run only one folder'        
-        folders = Dir.glob("**/#{mode}/#{@args[:folder]}/*.yml")
-        folders.map { |a| a.gsub!("states/#{mode}/", '').gsub!('.yml', '') }
-      else
-      p 'run single file'
+    if @args.nil?
+        folders = Dir.glob("**/**/*.yml")
+        folders.map { |a| a.gsub!(/states\/[a-z]*\//, '').gsub!('.yml', '') }     
+    elsif !@args.file.nil?
         [@args.file]
-      end
+    else
+      blocks_from_folder
+    end
   end
 
   def blocks_from_folder
       if !@args.folder.nil?
         folder_name = @args.folder
         mode = mode_from_name(folder_name)
-      elsif 
+      else
         folder_name = '**'
         mode = mode_from_name(@args.mode)
       end
@@ -49,7 +37,7 @@ class StateFolderTree < FolderTree
   def mode_from_name(name)
     if name[0] == 'w'
       'wireframes'
-    elsif name[0] == 'd'
+    else 
       'designs'
     end
   end
