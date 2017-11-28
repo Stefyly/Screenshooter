@@ -1,8 +1,8 @@
 class StateFolderTree < FolderTree
   # Set filename in format [name_[0-9] - if u need to run states only for 1 block
-  def initialize(file = nil)
+  def initialize(args = nil)
     FileUtils.mkpath('./screenshots/states') unless File.directory?('./screenshots/states')
-    @file = file
+    @args = args
     @current_folder = './screenshots/states'
     @blocks = block_paths
   end
@@ -10,13 +10,40 @@ class StateFolderTree < FolderTree
   # generate list of folder and subfolder names form ./states in format folder/subfolder
   # input  -> header_1.yml
   # output -> d-1/header
+
   def existed_states
-    if @file.nil?
-      folders = Dir.glob('**/wireframes/**/*.yml')
-      folders.map { |a| a.gsub!('states/wireframes/', '').gsub!('.yml', '') }
+    if @args.file.nil? && @args.folder.nil? && @args.mode.nil?
+      folders = Dir.glob('**/**/*.yml')
+      folders.map { |a| a.gsub!(/states\/[a-z]*\//, '').gsub!('.yml', '') }
+    elsif !@args.file.nil?
+      [@args.file]
     else
-      [@file]
+      blocks_from_folder
     end
+  end
+
+  def blocks_from_folder
+    if !@args.folder.nil?
+      folder_name = @args.folder
+      mode = mode_from_name(folder_name)
+    else
+      folder_name = '**'
+      mode = mode_from_name(@args.mode)
+    end
+    folders = Dir.glob("**/#{mode}/#{folder_name}/*.yml")
+    folders.map { |a| a.gsub!("states/#{mode}/", '').gsub!('.yml', '') }
+  end
+
+  def mode_from_name(name)
+    if name[0] == 'w'
+      'wireframes'
+    else
+      'designs'
+    end
+  end
+
+  def path_for_executor(block_name)
+    "../states/#{mode_from_name(block_name)}/" + block_name + '.yml'
   end
 
   # get hash of blocks names and its full path which have configs in /states folder

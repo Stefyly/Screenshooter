@@ -1,5 +1,5 @@
 class Screenshooter
-  attr_writer :folder_manager, :executor
+  attr_writer :folder_tree, :executor
 
   def initialize(browser)
     @browser = browser
@@ -19,47 +19,47 @@ class Screenshooter
   end
 
   def screenshot_full
-    @folder_manager.init_folder_tree
-    progressbar = ProgressBar.new(@folder_manager.blocks.length * @widths.length)
-    @folder_manager.blocks.each do |component_name, path|
+    @folder_tree.init_folder_tree
+    progressbar = ProgressBar.new(@folder_tree.blocks.length * @widths.length)
+    @folder_tree.blocks.each do |block_name, path|
       @browser.goto('file://' + path)
       @widths.each do |width|
-        make_screenshot(width, @folder_manager.pict_name(component_name, width))
+        make_screenshot(width, @folder_tree.pict_name(block_name, width))
         progressbar.increment!
       end
     end
   end
 
   def screenshot_states
-    @folder_manager.init_folder_tree
-    progressbar = ProgressBar.new(@folder_manager.blocks.length)
-    @folder_manager.blocks.each do |component_name, path|
-      @executor.commands_from_file(component_name)
+    @folder_tree.init_folder_tree
+    progressbar = ProgressBar.new(@folder_tree.blocks.length)
+    @folder_tree.blocks.each do |block_name, path|
+      @executor.commands_from_file(@folder_tree.path_for_executor(block_name))
       @browser.goto('file://' + path)
       @executor.state_count.times do |i|
         @executor.next_command
         @widths.each do |width|
-          make_screenshot(width, @folder_manager.pict_name(component_name, i, width))
+          make_screenshot(width, @folder_tree.pict_name(block_name, i, width))
         end
       end
       progressbar.increment!
     end
   end
 
-  def screenshot_parallel(n = 2)
-    @folder_manager.init_folder_tree
-    pb = ProgressBar.new(@folder_manager.blocks.length)
-    arr = @folder_manager.blocks.to_a
+  def screenshot_parallel(n = 1)
+    @folder_tree.init_folder_tree
+    pb = ProgressBar.new(@folder_tree.blocks.length)
+    arr = @folder_tree.blocks.to_a
     pb_incr = ->(_item, _i, _result) { pb.increment! }
     Parallel.map(arr, finish: pb_incr, in_processes: n.to_i) do |cmp|
       @browser = browser_factory('chrome')
       @executor = Executor.new(@browser)
-      @executor.commands_from_file(cmp[0])
+      @executor.commands_from_file(@folder_tree.path_for_executor(cmp[0]))
       @browser.goto('file://' + cmp[1])
       @executor.state_count.times do |i|
         @executor.next_command
         @widths.each do |width|
-          make_screenshot(width, @folder_manager.pict_name(cmp[0], i, width))
+          make_screenshot(width, @folder_tree.pict_name(cmp[0], i, width))
         end
       end
     end
