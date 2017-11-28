@@ -46,7 +46,7 @@ class Screenshooter
     end
   end
 
-  def screenshot_parallel(n = 2)
+  def screenshot_parallel(n = 1)
     @folder_tree.init_folder_tree
     pb = ProgressBar.new(@folder_tree.blocks.length)
     arr = @folder_tree.blocks.to_a

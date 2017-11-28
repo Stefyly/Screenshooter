@@ -7,7 +7,7 @@ class FullFolderTree < FolderTree
 
   # output [component name header/header_1 => full path to component]
   def block_paths
-    full_path = Dir.glob(CONFIG['mockup_path'] + '/wireframes/**/**/dist/index.html')
+    full_path = Dir.glob(CONFIG['mockup_path'] + '/**/**/**/dist/index.html')
     names = full_path.map do |name|
       name = /(?<=wireframes\/)\w+-[0-9]\/\w+\//.match(name).to_s
     end

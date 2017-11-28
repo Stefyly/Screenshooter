@@ -1,30 +1,57 @@
 require_relative './src/utils/deps.rb'
-# TO DO
-# button click
-#extra cases for mobile
+
 task default: %w[full]
 
-#:br -> browser_name
-task :states, [:file, :br] do |_t, args|
-  browser_name = args[:br].nil? ? 'chrome' : args[:br]
-  browser = browser_factory(browser_name)
-  scr = Screenshooter.new(browser)
-  scr.executor = Executor.new(browser)
-  scr.folder_manager = StateFolderTree.new(args[:file])
-  scr.screenshot_states
+namespace :state do
+  desc 'main task for states'
+  task :main do |_, args|
+    browser = browser_factory('chrome')
+    scr = Screenshooter.new(browser)
+    scr.executor = Executor.new(browser)
+    scr.folder_tree = StateFolderTree.new(args)
+    scr.screenshot_states
+  end
+
+  desc 'execute only one file [w-1/header]'
+  task :file, [:file] => :main
+
+  desc 'execute selected folder [w-1]'
+  task :folder, [:folder] => :main
+
+  desc 'execute all designs[d] or wireframes[w]'
+  task :mode, [:mode] => :main
+
+  desc 'excute all files from ./states folder'
+  task all: :main
 end
 
-task :states_parallel, [:processes] do |_t, args|
-  browser = browser_factory('chrome')
-  scr = Screenshooter.new(browser)
-  scr.executor = Executor.new(browser)
-  scr.folder_manager = StateFolderTree.new
-  scr.screenshot_parallel(args[:processes])
+namespace :parallel do
+  task :main do |_t, args|
+    browser = browser_factory('chrome')
+    scr = Screenshooter.new(browser)
+    scr.executor = Executor.new(browser)
+    scr.folder_tree = StateFolderTree.new(args)
+    scr.screenshot_parallel(args.processes)
+  end
+
+  desc 'execute only one file [w-1/header]'
+  task :file, [:file] => :main
+
+  desc 'execute selected folder [w-1] in several processes[2]'
+  task :folder, [:folder, :processes] => :main
+
+  desc 'execute all designs[d] or wireframes[w] in several processes[2]'
+  task :mode, [:mode, :processes] => :main
+
+  desc 'excute all files from ./states folder in several processes[2]'
+  task :all, [:processes] => :main
+
 end
 
-task :full do
+desc 'make screenshoots for all blocks without states for adaptivity check'
+task :adaptivity do
   browser = browser_factory('chrome')
   scr = Screenshooter.new(browser)
-  scr.folder_manager = FullFolderTree.new
+  scr.folder_tree = FullFolderTree.new
   scr.screenshot_full
 end
