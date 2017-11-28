@@ -13,37 +13,38 @@ class StateFolderTree < FolderTree
 
   def existed_states
     if @args.nil?
-        folders = Dir.glob("**/**/*.yml")
-        folders.map { |a| a.gsub!(/states\/[a-z]*\//, '').gsub!('.yml', '') }     
+      folders = Dir.glob('**/**/*.yml')
+      folders.map { |a| a.gsub!(/states\/[a-z]*\//, '').gsub!('.yml', '') }
     elsif !@args.file.nil?
-        [@args.file]
+      [@args.file]
     else
       blocks_from_folder
     end
   end
 
   def blocks_from_folder
-      if !@args.folder.nil?
-        folder_name = @args.folder
-        mode = mode_from_name(folder_name)
-      else
-        folder_name = '**'
-        mode = mode_from_name(@args.mode)
-      end
-      folders = Dir.glob("**/#{mode}/#{folder_name}/*.yml")
-      folders.map { |a| a.gsub!("states/#{mode}/", '').gsub!('.yml', '') }
+    if !@args.folder.nil?
+      folder_name = @args.folder
+      mode = mode_from_name(folder_name)
+    else
+      folder_name = '**'
+      mode = mode_from_name(@args.mode)
+    end
+    folders = Dir.glob("**/#{mode}/#{folder_name}/*.yml")
+    folders.map { |a| a.gsub!("states/#{mode}/", '').gsub!('.yml', '') }
   end
 
   def mode_from_name(name)
     if name[0] == 'w'
       'wireframes'
-    else 
+    else
       'designs'
     end
   end
-    
-    
-  
+
+  def path_for_executor(block_name)
+    "../states/#{mode_from_name(block_name)}/" + block_name + '.yml'
+  end
 
   # get hash of blocks names and its full path which have configs in /states folder
   # in format

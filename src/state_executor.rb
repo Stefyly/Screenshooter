@@ -18,7 +18,7 @@ class Executor
   end
 
   def commands_from_file(block_name)
-    obj = YAML.safe_load(File.read(File.join(File.dirname(__FILE__), '../states/'+ block_name + '.yml')))
+    obj = YAML.safe_load(File.read(File.join(File.dirname(__FILE__), block_name)))
     @commands = obj['states']
     @state_count = obj['total']
     @current_state = 0
