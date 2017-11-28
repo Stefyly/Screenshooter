@@ -38,14 +38,13 @@ namespace :parallel do
   task :file, [:file] => :main
 
   desc 'execute selected folder [w-1] in several processes[2]'
-  task :folder, [:folder, :processes] => :main
+  task :folder, %i[folder processes] => :main
 
   desc 'execute all designs[d] or wireframes[w] in several processes[2]'
-  task :mode, [:mode, :processes] => :main
+  task :mode, %i[mode processes] => :main
 
   desc 'excute all files from ./states folder in several processes[2]'
   task :all, [:processes] => :main
-
 end
 
 desc 'make screenshoots for all blocks without states for adaptivity check'
@@ -54,4 +53,10 @@ task :adaptivity do
   scr = Screenshooter.new(browser)
   scr.folder_tree = FullFolderTree.new
   scr.screenshot_full
+end
+
+namespace :utils do
+  task :rm, [:folder_name] do |_t, args|
+    `rm -rf #{args.folder_name}`
+  end
 end
