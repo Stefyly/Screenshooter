@@ -12,7 +12,7 @@ class StateFolderTree < FolderTree
   # output -> d-1/header
 
   def existed_states
-    if @args.nil?
+    if @args.file.nil? && @args.folder.nil? && @args.mode.nil?
       folders = Dir.glob('**/**/*.yml')
       folders.map { |a| a.gsub!(/states\/[a-z]*\//, '').gsub!('.yml', '') }
     elsif !@args.file.nil?
